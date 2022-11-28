@@ -1,0 +1,47 @@
+﻿@model SearchRestaurantsQueryModel
+
+
+<form method="get">
+    <div class="row mb-5">
+        <div class="form-group col-md-3">
+            <label asp-for="SearchTerm"></label>
+            <input asp-for="SearchTerm" class="form-control" placeholder="Restaurant or Dish">
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="SearchTerm"></label>
+            <input asp-for="SearchTerm" class="form-control" placeholder="Restaurant or Dish">
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="SearchTerm"></label>
+            <input asp-for="SearchTerm" class="form-control" placeholder="Restaurant or Dish">
+        </div>
+        <div class="form-group col-md-3">
+            <input class="btn btn-dark d-none" type="submit" value="Search" />
+        </div>
+    </div>
+</form>
+
+<div class="mb-5"></div>
+
+<div class="row">
+    @foreach (var restaurant in Model.Restaurants)
+    {
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <img class="card-img-top" src="@restaurant.RestaurantImage" alt="@restaurant.Name">
+                <div class="card-body text-center">
+                    <h5 class="card-title">@restaurant.Name</h5>
+                    <p class="card-text"></p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">@restaurant.Rating @restaurant.Category</li>
+                    <li class="list-group-item">@restaurant.DeliveryTime @restaurant.DeliveryCost @restaurant.MinOrderAmount</li>
+                </ul>
+                <div class="card-body">
+                    <a asp-controller="Restaurant" asp-action="Details" asp-route-id="@restaurant.Id" class="btn btnn-dark">Details</a>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>

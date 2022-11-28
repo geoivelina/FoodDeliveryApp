@@ -4,6 +4,7 @@ using FoodDeliveryApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodDeliveryApp.Data.Migrations
 {
     [DbContext(typeof(FoodDeliveryAppDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221128120202_MadeSomeSmallChangesSeedingDataAndAddRestaurant")]
+    partial class MadeSomeSmallChangesSeedingDataAndAddRestaurant
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,7 +140,7 @@ namespace FoodDeliveryApp.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<decimal>("Rating")
+                    b.Property<decimal>("Rading")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("RestaurantImage")
@@ -166,7 +168,7 @@ namespace FoodDeliveryApp.Data.Migrations
                             Description = "Authentic Italian pizza",
                             MinOrderAmount = "Min. 10.00 lv.",
                             Name = "Genaro`s pizza",
-                            Rating = 8.50m,
+                            Rading = 0m,
                             RestaurantImage = "https://tse1.mm.bing.net/th?id=OIP.VIHoNlxPTkXfW2i6DgfIbwHaF7&pid=Api",
                             WorkingHours = "12:00 - 22:00"
                         },
@@ -179,7 +181,7 @@ namespace FoodDeliveryApp.Data.Migrations
                             Description = "Authentic Indian pizza",
                             MinOrderAmount = "Min. 20.00 lv.",
                             Name = "Taj Mahal",
-                            Rating = 7.5m,
+                            Rading = 0m,
                             RestaurantImage = "https://tse2.mm.bing.net/th?id=OIP.8gNduGMsG-TnwPqLDlRQVQHaE8&pid=Api",
                             WorkingHours = "11:00 - 23:00"
                         },
@@ -192,7 +194,7 @@ namespace FoodDeliveryApp.Data.Migrations
                             Description = "Best American style burgers",
                             MinOrderAmount = "Min. 20.00 lv.",
                             Name = "Burgers & Fries",
-                            Rating = 9.8m,
+                            Rading = 0m,
                             RestaurantImage = "https://tse1.mm.bing.net/th?id=OIP.W0r1nOj-EPrXoziOqjjFPAHaE8&pid=Api",
                             WorkingHours = "11:00 - 23:00"
                         },
@@ -205,7 +207,7 @@ namespace FoodDeliveryApp.Data.Migrations
                             Description = "Cosy Mexican restaurant in the heart of the big city",
                             MinOrderAmount = "Min. 20.00 lv.",
                             Name = "El Gatto",
-                            Rating = 8.25m,
+                            Rading = 0m,
                             RestaurantImage = "https://tse4.mm.bing.net/th?id=OIP.Q74hg6Rl1KPSs-0sUXcXugHaE8&pid=Api",
                             WorkingHours = "11:00 - 22:00"
                         },
@@ -218,7 +220,7 @@ namespace FoodDeliveryApp.Data.Migrations
                             Description = "Authentic sushi prepared from our sushi master",
                             MinOrderAmount = "Min. 20.00 lv.",
                             Name = "Kioto sushi",
-                            Rating = 7.80m,
+                            Rading = 0m,
                             RestaurantImage = "https://tse3.mm.bing.net/th?id=OIP.2oT2R6wz3DbEm0NIePcJzwHaE_&pid=Api",
                             WorkingHours = "11:00 - 24:00"
                         },
@@ -231,7 +233,7 @@ namespace FoodDeliveryApp.Data.Migrations
                             Description = "Authentic Chinese dishes",
                             MinOrderAmount = "Min. 10.00 lv.",
                             Name = "Golden dragon",
-                            Rating = 9.0m,
+                            Rading = 0m,
                             RestaurantImage = "https://tse2.mm.bing.net/th?id=OIP.GvVXxZP0xh8i9a_1XFmTyAHaE8&pid=Api",
                             WorkingHours = "12:00 - 22:00"
                         });

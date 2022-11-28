@@ -1,7 +1,66 @@
-﻿@{
+﻿@model IndexViewModel
+@{
     ViewData["Title"] = "Home Page";
+    bool first = true;
+    var restaurants = Model.Restaurants;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to our Food Delivery Site</h1>
+
+
+@if (!restaurants.Any())
+{
+    <div class="md-4 p-5 bg-light">
+        <h1 class="display-4">Welcome To Best Delivery Food Site</h1>
+        <p class="lead">
+            There are no added restaurants an that moment, so why dont you add one now?
+        </p>
+        <hr class="my-4">
+        <p class="lead">
+            <a asp-controller="Restaurant" asp-action="Add" class="btn btn-primary btn-lg" role="button">Add Restaurant</a>
+        </p>
+    </div>
+}
+
+<div class="mb-5"></div>
+
+<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        @foreach (var rest in Model.Restaurants)
+        {
+
+            <div class="carousel-item  @(first  ? "active" : string.Empty)">
+                <img class="d-block w-100" style="height:500px"
+                 src="@rest.RestaurantImage" alt="@rest.Name">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>
+                        <a class="btn btn-dark" asp-controller="Restaurant" asp-action="Details"
+                       asp-route-id="@rest.Id"> @rest.Name</a>
+                    </h5>
+                </div>
+            </div>
+            first = false;
+        }
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+<div class="margin-mb-5"></div>
+<div class="jumbotron">
+    <div class="row">
+        <h2 class="col-md-4 text-center">
+            @Model.TotalRestaurants  Restaurants
+        </h2>
+        <h2 class="col-md-4 text-center">
+            @Model.TotalUsers  Users
+        </h2>
+        <h2 class="col-md-4 text-center">
+            @Model.TotalOrders  Orders
+        </h2>
+    </div>
 </div>

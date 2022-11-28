@@ -4,6 +4,7 @@ using FoodDeliveryApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodDeliveryApp.Data.Migrations
 {
     [DbContext(typeof(FoodDeliveryAppDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221128104402_RestaurantAndCuisineTypeTables")]
+    partial class RestaurantAndCuisineTypeTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,71 +40,9 @@ namespace FoodDeliveryApp.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CuisineTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Indian"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Burgers"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Sishi"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Italian"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Asian"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Bulgarian"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Arab"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Pizza"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Vegetarian"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Europian"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "Mexican"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Name = "Fine dine"
-                        });
                 });
 
-            modelBuilder.Entity("FoodDeliveryApp.Data.Entities.Restaurant", b =>
+            modelBuilder.Entity("FoodDeliveryApp.Models.Restaurant", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -110,7 +50,7 @@ namespace FoodDeliveryApp.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CuisineTypeId")
+                    b.Property<int>("CuisineTipeId")
                         .HasColumnType("int");
 
                     b.Property<string>("DeliveryCost")
@@ -118,15 +58,14 @@ namespace FoodDeliveryApp.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("DeliveryTime")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MinOrderAmount")
                         .IsRequired()
@@ -138,12 +77,8 @@ namespace FoodDeliveryApp.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<decimal>("Rating")
+                    b.Property<decimal>("Rading")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("RestaurantImage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WorkingHours")
                         .IsRequired()
@@ -152,89 +87,9 @@ namespace FoodDeliveryApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CuisineTypeId");
+                    b.HasIndex("CuisineTipeId");
 
                     b.ToTable("Restaurants");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CuisineTypeId = 8,
-                            DeliveryCost = "Free",
-                            DeliveryTime = "20 - 50 min.",
-                            Description = "Authentic Italian pizza",
-                            MinOrderAmount = "Min. 10.00 lv.",
-                            Name = "Genaro`s pizza",
-                            Rating = 8.50m,
-                            RestaurantImage = "https://tse1.mm.bing.net/th?id=OIP.VIHoNlxPTkXfW2i6DgfIbwHaF7&pid=Api",
-                            WorkingHours = "12:00 - 22:00"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CuisineTypeId = 1,
-                            DeliveryCost = "Free from 30.00 lv.",
-                            DeliveryTime = "30 - 50 min.",
-                            Description = "Authentic Indian pizza",
-                            MinOrderAmount = "Min. 20.00 lv.",
-                            Name = "Taj Mahal",
-                            Rating = 7.5m,
-                            RestaurantImage = "https://tse2.mm.bing.net/th?id=OIP.8gNduGMsG-TnwPqLDlRQVQHaE8&pid=Api",
-                            WorkingHours = "11:00 - 23:00"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CuisineTypeId = 2,
-                            DeliveryCost = "Free from 20.00 lv.",
-                            DeliveryTime = "20 - 50 min.",
-                            Description = "Best American style burgers",
-                            MinOrderAmount = "Min. 20.00 lv.",
-                            Name = "Burgers & Fries",
-                            Rating = 9.8m,
-                            RestaurantImage = "https://tse1.mm.bing.net/th?id=OIP.W0r1nOj-EPrXoziOqjjFPAHaE8&pid=Api",
-                            WorkingHours = "11:00 - 23:00"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CuisineTypeId = 11,
-                            DeliveryCost = "2.99 lv.",
-                            DeliveryTime = "20 - 50 min.",
-                            Description = "Cosy Mexican restaurant in the heart of the big city",
-                            MinOrderAmount = "Min. 20.00 lv.",
-                            Name = "El Gatto",
-                            Rating = 8.25m,
-                            RestaurantImage = "https://tse4.mm.bing.net/th?id=OIP.Q74hg6Rl1KPSs-0sUXcXugHaE8&pid=Api",
-                            WorkingHours = "11:00 - 22:00"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CuisineTypeId = 3,
-                            DeliveryCost = "2.99 lv.",
-                            DeliveryTime = "30 - 60 min.",
-                            Description = "Authentic sushi prepared from our sushi master",
-                            MinOrderAmount = "Min. 20.00 lv.",
-                            Name = "Kioto sushi",
-                            Rating = 7.80m,
-                            RestaurantImage = "https://tse3.mm.bing.net/th?id=OIP.2oT2R6wz3DbEm0NIePcJzwHaE_&pid=Api",
-                            WorkingHours = "11:00 - 24:00"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CuisineTypeId = 5,
-                            DeliveryCost = "5.99 lv.",
-                            DeliveryTime = "30 - 60 min.",
-                            Description = "Authentic Chinese dishes",
-                            MinOrderAmount = "Min. 10.00 lv.",
-                            Name = "Golden dragon",
-                            Rating = 9.0m,
-                            RestaurantImage = "https://tse2.mm.bing.net/th?id=OIP.GvVXxZP0xh8i9a_1XFmTyAHaE8&pid=Api",
-                            WorkingHours = "12:00 - 22:00"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -439,11 +294,11 @@ namespace FoodDeliveryApp.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("FoodDeliveryApp.Data.Entities.Restaurant", b =>
+            modelBuilder.Entity("FoodDeliveryApp.Models.Restaurant", b =>
                 {
                     b.HasOne("FoodDeliveryApp.Data.CuisineType", "CuisineType")
                         .WithMany("Restaurants")
-                        .HasForeignKey("CuisineTypeId")
+                        .HasForeignKey("CuisineTipeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

@@ -1,4 +1,6 @@
-﻿using FoodDeliveryApp.Models;
+﻿using FoodDeliveryApp.Data;
+using FoodDeliveryApp.Models;
+using FoodDeliveryApp.Models.Home;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,10 +8,36 @@ namespace FoodDeliveryApp.Controllers
 {
     public class HomeController : Controller
     {
-       
+        private readonly FoodDeliveryAppDbContext data;
+
+        public HomeController(FoodDeliveryAppDbContext data)
+        {
+            this.data = data;
+        }
+
+
         public IActionResult Index()
         {
-            return View();
+            var totalRestaurants = this.data.Restaurants.Count();
+            var restaurants = this.data
+                .Restaurants
+                .OrderByDescending(r => r.Id)
+                .Select(r => new RestaurantIndexModel
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    RestaurantImage = r.RestaurantImage
+                })
+                .Take(5)
+                .ToList();
+
+
+
+            return View(new IndexViewModel
+            {
+                TotalRestaurants = totalRestaurants,
+                Restaurants = restaurants
+            });
         }
 
       
