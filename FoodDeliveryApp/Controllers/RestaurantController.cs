@@ -63,22 +63,44 @@ namespace FoodDeliveryApp.Controllers
             return RedirectToAction(nameof(All));
         }
 
-        public IActionResult All(string searchTerm)
+        public IActionResult All([FromQuery] SearchRestaurantsQueryModel query
+            )
         {
             var restaurantsQuery = this.data.Restaurants.AsQueryable();
-
-            if (!string.IsNullOrWhiteSpace(searchTerm))
+            if (!string.IsNullOrWhiteSpace(query.CuisineType))
             {
-                searchTerm = $"%{searchTerm.ToLower()}%";
+                restaurantsQuery = restaurantsQuery.Where(r => r.CuisineType.Name == query.CuisineType);
+            }
+
+            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
+            {
+                query.SearchTerm = $"%{query.SearchTerm.ToLower()}%";
+                // this sorting does not work. Check why
                 //restaurantsQuery = restaurantsQuery.Where(r =>
                 //    r.Name.ToLower().Contains(searchTerm) ||
                 //    r.CuisineType.Name.ToLower().Contains(searchTerm));
+
+                //when performing search "a" and hit next page btn "a"becomes "%a%" check why
                 restaurantsQuery = restaurantsQuery
-                   .Where(r => EF.Functions.Like(r.Name.ToLower(), searchTerm) ||
-                   EF.Functions.Like(r.CuisineType.Name.ToLower(), searchTerm));
+                   .Where(r => EF.Functions.Like(r.Name.ToLower(), query.SearchTerm) ||
+                   EF.Functions.Like(r.CuisineType.Name.ToLower(), query.SearchTerm));
             };
 
+
+            //TODO CHECK WHY ORDER BY RATINGG DOES NOT WORK!
+            restaurantsQuery = query.Sorting switch
+            {
+                RestaurantSorting.LastAdded => restaurantsQuery.OrderByDescending(r => r.Id),
+                RestaurantSorting.BestMatch => restaurantsQuery.OrderByDescending(r => r.Name),
+                RestaurantSorting.Rating => restaurantsQuery.OrderByDescending(r => r.Rating).ThenBy(r => r.Name),
+                _ => restaurantsQuery.OrderByDescending(r => r.Id)
+            };
+
+            var totalRestaurants = restaurantsQuery.Count();
+
             var restaurants = restaurantsQuery
+                .Skip((query.CurrentPage - 1) * SearchRestaurantsQueryModel.RestaurantsPerPage)
+                .Take(SearchRestaurantsQueryModel.RestaurantsPerPage)
                 .OrderByDescending(r => r.Id)
                 .Select(r => new RestaurantListingViewModel
                 {
@@ -94,10 +116,19 @@ namespace FoodDeliveryApp.Controllers
                 })
                 .ToList();
 
-            return View(new SearchRestaurantsQueryModel
-            {
-                Restaurants = restaurants
-            });
+            var cuisineTypes = this.data
+                .Restaurants
+                .Select(r => r.CuisineType.Name)
+                .OrderBy(r => r)
+                .Distinct()
+                .OrderBy(ct => ct)
+                .ToList();
+
+
+            query.CuisineTypes = cuisineTypes;
+            query.Restaurants = restaurants;
+            query.TotalRestairants = totalRestaurants;
+            return View(query);
         }
 
         private IEnumerable<RestaurantCuisineTypeModel> GetRestaurantCuisineTypeModels()

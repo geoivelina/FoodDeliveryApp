@@ -20,3 +20,7 @@ body {
     margin-right:30px;
     margin-bottom: 30px;
 }
+.pagination{
+    color: white;
+    text-decoration: none;
+}

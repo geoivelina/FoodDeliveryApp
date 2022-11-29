@@ -40,5 +40,8 @@ namespace FoodDeliveryApp.Data.Entities
 
         public int CuisineTypeId { get; set; }
         public CuisineType CuisineType { get; set; } = null!;
+
+        //public int MenuId { get; set; }
+        //public Menu Menu { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 {
     public enum RestaurantSorting
     {
-        Alphabetical = 0,
+        LastAdded = 0,
         BestMatch = 1,
         Rating = 2
     }

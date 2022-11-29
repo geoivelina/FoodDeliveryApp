@@ -1,8 +1,7 @@
-﻿using FoodDeliveryApp.Data.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using static FoodDeliveryApp.Data.DataConstants.CuisineType;
 
-namespace FoodDeliveryApp.Data
+namespace FoodDeliveryApp.Data.Entities
 {
     public class CuisineType
     {
