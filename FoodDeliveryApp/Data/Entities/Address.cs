@@ -27,8 +27,8 @@ namespace FoodDeliveryApp.Data.Entities
         public string PostCode { get; set; }
         public int CityId { get; set; }
         public City City { get; set; }
-        public IEnumerable<Address> Addresses { get; set; } = new List<Address>();
-        public IEnumerable<Invoice> Invoices { get; set; } = new List<Invoice>();
+        public IEnumerable<Order> Orders { get; set; } = new List<Order>();
+       
 
     }
 }

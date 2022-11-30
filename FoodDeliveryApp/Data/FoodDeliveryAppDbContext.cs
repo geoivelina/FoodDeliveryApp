@@ -17,7 +17,6 @@ namespace FoodDeliveryApp.Data
         public DbSet<CuisineType> CuisineTypes { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Dish> Dishes { get; set; }
-        public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Restaurant> Restaurants { get; set; }
@@ -39,27 +38,7 @@ namespace FoodDeliveryApp.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
 
-            builder
-                .Entity<Invoice>()
-                .HasOne(i => i.Customer)
-                .WithMany(c => c.Invoices)
-                .HasForeignKey(i => i.CustomerId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder
-                .Entity<Invoice>()
-                .HasOne(i => i.Address)
-                .WithMany(a => a.Invoices)
-                .HasForeignKey(i => i.AddressId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            //builder
-            //    .Entity<Invoice>()
-            //    .HasOne(i => i.Order)
-            //    .WithMany(o => o.Invoices)
-            //    .HasForeignKey(i => i.OrderId)
-            //    .OnDelete(DeleteBehavior.Restrict);
-
+            
 
             builder.ApplyConfiguration<Restaurant>(new RestaurantConfiguration());
             builder.ApplyConfiguration<CuisineType>(new CuisineTypesConfiguration());

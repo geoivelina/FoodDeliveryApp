@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodDeliveryApp.Data.Migrations
 {
     [DbContext(typeof(FoodDeliveryAppDbContext))]
-    [Migration("20221130134932_InvoiceConfig")]
-    partial class InvoiceConfig
+    [Migration("20221130152653_AddingNewEntities")]
+    partial class AddingNewEntities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,9 +31,6 @@ namespace FoodDeliveryApp.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("AddressId")
-                        .HasColumnType("int");
 
                     b.Property<string>("AppartmentNumber")
                         .IsRequired()
@@ -67,8 +64,6 @@ namespace FoodDeliveryApp.Data.Migrations
                         .HasColumnType("nvarchar(5)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
 
                     b.HasIndex("CityId");
 
@@ -242,40 +237,6 @@ namespace FoodDeliveryApp.Data.Migrations
                     b.ToTable("Dishes");
                 });
 
-            modelBuilder.Entity("FoodDeliveryApp.Data.Entities.Invoice", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AddressId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("InvoiceStatus")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("Invoices");
-                });
-
             modelBuilder.Entity("FoodDeliveryApp.Data.Entities.Menu", b =>
                 {
                     b.Property<int>("Id")
@@ -369,6 +330,9 @@ namespace FoodDeliveryApp.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
@@ -378,7 +342,12 @@ namespace FoodDeliveryApp.Data.Migrations
                     b.Property<int>("OrderStatus")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
 
                     b.HasIndex("CustomerId");
 
@@ -700,10 +669,6 @@ namespace FoodDeliveryApp.Data.Migrations
 
             modelBuilder.Entity("FoodDeliveryApp.Data.Entities.Address", b =>
                 {
-                    b.HasOne("FoodDeliveryApp.Data.Entities.Address", null)
-                        .WithMany("Addresses")
-                        .HasForeignKey("AddressId");
-
                     b.HasOne("FoodDeliveryApp.Data.Entities.City", "City")
                         .WithMany("Addresses")
                         .HasForeignKey("CityId")
@@ -728,29 +693,6 @@ namespace FoodDeliveryApp.Data.Migrations
                     b.Navigation("Menu");
                 });
 
-            modelBuilder.Entity("FoodDeliveryApp.Data.Entities.Invoice", b =>
-                {
-                    b.HasOne("FoodDeliveryApp.Data.Entities.Address", "Address")
-                        .WithMany("Invoices")
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("FoodDeliveryApp.Data.Entities.Customer", "Customer")
-                        .WithMany("Invoices")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("FoodDeliveryApp.Data.Entities.Order", null)
-                        .WithMany("Invoices")
-                        .HasForeignKey("OrderId");
-
-                    b.Navigation("Address");
-
-                    b.Navigation("Customer");
-                });
-
             modelBuilder.Entity("FoodDeliveryApp.Data.Entities.Menu", b =>
                 {
                     b.HasOne("FoodDeliveryApp.Data.Entities.Restaurant", "Restaurant")
@@ -764,6 +706,12 @@ namespace FoodDeliveryApp.Data.Migrations
 
             modelBuilder.Entity("FoodDeliveryApp.Data.Entities.Order", b =>
                 {
+                    b.HasOne("FoodDeliveryApp.Data.Entities.Address", "Address")
+                        .WithMany("Orders")
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("FoodDeliveryApp.Data.Entities.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId")
@@ -775,6 +723,8 @@ namespace FoodDeliveryApp.Data.Migrations
                         .HasForeignKey("DishId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Address");
 
                     b.Navigation("Customer");
 
@@ -845,9 +795,7 @@ namespace FoodDeliveryApp.Data.Migrations
 
             modelBuilder.Entity("FoodDeliveryApp.Data.Entities.Address", b =>
                 {
-                    b.Navigation("Addresses");
-
-                    b.Navigation("Invoices");
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("FoodDeliveryApp.Data.Entities.City", b =>
@@ -864,19 +812,12 @@ namespace FoodDeliveryApp.Data.Migrations
                 {
                     b.Navigation("Addresses");
 
-                    b.Navigation("Invoices");
-
                     b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("FoodDeliveryApp.Data.Entities.Menu", b =>
                 {
                     b.Navigation("Dishes");
-                });
-
-            modelBuilder.Entity("FoodDeliveryApp.Data.Entities.Order", b =>
-                {
-                    b.Navigation("Invoices");
                 });
 
             modelBuilder.Entity("FoodDeliveryApp.Data.Entities.Restaurant", b =>

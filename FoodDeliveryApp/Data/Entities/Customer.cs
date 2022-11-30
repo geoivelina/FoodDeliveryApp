@@ -23,6 +23,6 @@ namespace FoodDeliveryApp.Data.Entities
         public string UserId { get; set; }
         public IEnumerable<Address> Addresses { get; set; } = new List<Address>();
         public IEnumerable<Order> Orders { get; set; } = new List<Order>();
-        public IEnumerable<Invoice> Invoices { get; set; } = new List<Invoice>();
+     
     }
 }

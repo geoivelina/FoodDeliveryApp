@@ -10,6 +10,9 @@ namespace FoodDeliveryApp.Data.Entities
         public Customer Customer { get; set; }
         public int DishId { get; set; }
         public Dish Dish { get; set; }
-        public IEnumerable<Invoice> Invoices { get; set; } = new List<Invoice>();
+        public int AddressId { get; set; }
+        public Address Address { get; set; }
+        public decimal TotalAmount { get; set; }
+
     }
 }
