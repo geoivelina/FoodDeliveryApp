@@ -40,8 +40,7 @@ namespace FoodDeliveryApp.Data.Entities
 
         public int CuisineTypeId { get; set; }
         public CuisineType CuisineType { get; set; } = null!;
+        public IEnumerable<Menu> Menus { get; set; } = new List<Menu>();
 
-        //public int MenuId { get; set; }
-        //public Menu Menu { get; set; }
     }
 }

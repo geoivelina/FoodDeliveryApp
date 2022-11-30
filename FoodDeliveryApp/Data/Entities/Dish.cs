@@ -14,10 +14,13 @@ namespace FoodDeliveryApp.Data.Entities
         public string DishImage { get; set; } = null!;
 
         [Required]
+        public decimal Price { get; set; }
+
+        [Required]
         [StringLength(DescriptionMaxLength)]
         public string Descriprion { get; set; } = null!;
 
-        //public int MenuId { get; set; }
-        //public Menu Menu { get; set; }
+        public int MenuId { get; set; }
+        public Menu Menu { get; set; }
     }
 }

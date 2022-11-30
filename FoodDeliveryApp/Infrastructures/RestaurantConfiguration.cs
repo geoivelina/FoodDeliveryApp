@@ -12,7 +12,7 @@ namespace FoodDeliveryApp.Infrastructures
             builder.HasData(CreateRestaurants());
         }
 
-      
+
         private List<Restaurant> CreateRestaurants()
         {
             var restaurants = new List<Restaurant>();
@@ -61,20 +61,6 @@ namespace FoodDeliveryApp.Infrastructures
                 Rating = 9.8m,
             };
             restaurants.Add(restaurant);
-            restaurant = new Restaurant()
-            {
-                Id = 4,
-                CuisineTypeId = 11,
-                Name = "El Gatto",
-                Description = "Cosy Mexican restaurant in the heart of the big city",
-                WorkingHours = "11:00 - 22:00",
-                DeliveryCost = "2.99 lv.",
-                DeliveryTime = "20 - 50 min.",
-                MinOrderAmount = "Min. 20.00 lv.",
-                RestaurantImage = "https://tse4.mm.bing.net/th?id=OIP.Q74hg6Rl1KPSs-0sUXcXugHaE8&pid=Api",
-                Rating = 8.25m,
-            };
-            restaurants.Add(restaurant);
 
             restaurant = new Restaurant()
             {
@@ -88,22 +74,6 @@ namespace FoodDeliveryApp.Infrastructures
                 MinOrderAmount = "Min. 20.00 lv.",
                 RestaurantImage = "https://tse3.mm.bing.net/th?id=OIP.2oT2R6wz3DbEm0NIePcJzwHaE_&pid=Api",
                 Rating = 7.80m,
-            };
-            restaurants.Add(restaurant);
-
-
-            restaurant = new Restaurant()
-            {
-                Id = 6,
-                CuisineTypeId = 5,
-                Name = "Golden dragon",
-                Description = "Authentic Chinese dishes",
-                WorkingHours = "12:00 - 22:00",
-                DeliveryCost = "5.99 lv.",
-                DeliveryTime = "30 - 60 min.",
-                MinOrderAmount = "Min. 10.00 lv.",
-                RestaurantImage = "https://tse2.mm.bing.net/th?id=OIP.GvVXxZP0xh8i9a_1XFmTyAHaE8&pid=Api",
-                Rating = 9.0m,
             };
             restaurants.Add(restaurant);
 

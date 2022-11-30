@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FoodDeliveryApp.Services.Restaurant;
+using System.ComponentModel.DataAnnotations;
 
 namespace FoodDeliveryApp.Models.Restaurant
 {
@@ -15,7 +16,7 @@ namespace FoodDeliveryApp.Models.Restaurant
         public int CurrentPage { get; set; } = 1;
 
         public int TotalRestairants { get; set; }
-        public List<string> CuisineTypes { get; set; } = null!;
-        public IEnumerable<RestaurantListingViewModel> Restaurants { get; set; }
+        public IEnumerable<string> CuisineTypes { get; set; } = null!;
+        public IEnumerable<RestaurantServiceModel> Restaurants { get; set; }
     }
 }

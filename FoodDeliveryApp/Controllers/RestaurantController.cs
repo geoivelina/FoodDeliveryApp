@@ -1,6 +1,7 @@
 ﻿using FoodDeliveryApp.Data;
 using FoodDeliveryApp.Data.Entities;
 using FoodDeliveryApp.Models.Restaurant;
+using FoodDeliveryApp.Services.Restaurant;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,11 +9,15 @@ namespace FoodDeliveryApp.Controllers
 {
     public class RestaurantController : Controller
     {
+        private readonly IRestaurantService restaurants;
         private readonly FoodDeliveryAppDbContext data;
 
-        public RestaurantController(FoodDeliveryAppDbContext data)
+        public RestaurantController(
+            IRestaurantService restaurants,
+            FoodDeliveryAppDbContext data)
         {
             this.data = data;
+            this.restaurants = restaurants;
         }
 
         public IActionResult Index()
@@ -63,71 +68,22 @@ namespace FoodDeliveryApp.Controllers
             return RedirectToAction(nameof(All));
         }
 
-        public IActionResult All([FromQuery] SearchRestaurantsQueryModel query
-            )
+        [HttpGet]
+        public IActionResult All([FromQuery] SearchRestaurantsQueryModel query)
         {
-            var restaurantsQuery = this.data.Restaurants.AsQueryable();
-            if (!string.IsNullOrWhiteSpace(query.CuisineType))
-            {
-                restaurantsQuery = restaurantsQuery.Where(r => r.CuisineType.Name == query.CuisineType);
-            }
+            var queryResult = this.restaurants.All(
+                query.CuisineType,
+                query.SearchTerm,
+                query.Sorting,
+                query.CurrentPage,
+                SearchRestaurantsQueryModel.RestaurantsPerPage);
 
-            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
-            {
-                query.SearchTerm = $"%{query.SearchTerm.ToLower()}%";
-                // this sorting does not work. Check why
-                //restaurantsQuery = restaurantsQuery.Where(r =>
-                //    r.Name.ToLower().Contains(searchTerm) ||
-                //    r.CuisineType.Name.ToLower().Contains(searchTerm));
+            var cuisineTypes = this.restaurants.AllCuisineTypes();
 
-                //when performing search "a" and hit next page btn "a"becomes "%a%" check why
-                restaurantsQuery = restaurantsQuery
-                   .Where(r => EF.Functions.Like(r.Name.ToLower(), query.SearchTerm) ||
-                   EF.Functions.Like(r.CuisineType.Name.ToLower(), query.SearchTerm));
-            };
-
-
-            //TODO CHECK WHY ORDER BY RATINGG DOES NOT WORK!
-            restaurantsQuery = query.Sorting switch
-            {
-                RestaurantSorting.LastAdded => restaurantsQuery.OrderByDescending(r => r.Id),
-                RestaurantSorting.BestMatch => restaurantsQuery.OrderByDescending(r => r.Name),
-                RestaurantSorting.Rating => restaurantsQuery.OrderByDescending(r => r.Rating).ThenBy(r => r.Name),
-                _ => restaurantsQuery.OrderByDescending(r => r.Id)
-            };
-
-            var totalRestaurants = restaurantsQuery.Count();
-
-            var restaurants = restaurantsQuery
-                .Skip((query.CurrentPage - 1) * SearchRestaurantsQueryModel.RestaurantsPerPage)
-                .Take(SearchRestaurantsQueryModel.RestaurantsPerPage)
-                .OrderByDescending(r => r.Id)
-                .Select(r => new RestaurantListingViewModel
-                {
-                    Id = r.Id,
-                    Name = r.Name,
-                    RestaurantImage = r.RestaurantImage,
-                    Category = r.CuisineType.Name,
-                    DeliveryCost = r.DeliveryCost,
-                    DeliveryTime = r.DeliveryTime,
-                    MinOrderAmount = r.MinOrderAmount,
-                    Rating = r.Rating,
-                    WorkingHours = r.WorkingHours
-                })
-                .ToList();
-
-            var cuisineTypes = this.data
-                .Restaurants
-                .Select(r => r.CuisineType.Name)
-                .OrderBy(r => r)
-                .Distinct()
-                .OrderBy(ct => ct)
-                .ToList();
-
-
+            query.TotalRestairants = queryResult.TotalRestaurants;
             query.CuisineTypes = cuisineTypes;
-            query.Restaurants = restaurants;
-            query.TotalRestairants = totalRestaurants;
+            query.Restaurants = queryResult.Restaurants;
+
             return View(query);
         }
 

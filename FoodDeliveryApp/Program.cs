@@ -1,4 +1,6 @@
 using FoodDeliveryApp.Data;
+using FoodDeliveryApp.Services.Restaurant;
+using FoodDeliveryApp.Services.Statistics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +20,9 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 })
     .AddEntityFrameworkStores<FoodDeliveryAppDbContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IStatisticsService, StatisticService>();
+builder.Services.AddScoped<IRestaurantService, RestaurantService>();
 
 var app = builder.Build();
 

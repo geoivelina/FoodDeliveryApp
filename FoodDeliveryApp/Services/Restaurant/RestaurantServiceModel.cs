@@ -1,6 +1,6 @@
-﻿namespace FoodDeliveryApp.Models.Restaurant
+﻿namespace FoodDeliveryApp.Services.Restaurant
 {
-    public class RestaurantListingViewModel
+    public class RestaurantServiceModel
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
@@ -17,5 +17,6 @@
 
         public string DeliveryTime { get; set; } = null!;
         public string Category { get; set; }
+
     }
 }

@@ -4,6 +4,7 @@ using FoodDeliveryApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodDeliveryApp.Data.Migrations
 {
     [DbContext(typeof(FoodDeliveryAppDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221130114900_AddingNewEntities")]
+    partial class AddingNewEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -257,7 +259,7 @@ namespace FoodDeliveryApp.Data.Migrations
                     b.Property<int>("InvoiceStatus")
                         .HasColumnType("int");
 
-                    b.Property<int?>("OrderId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("TotalAmount")
@@ -731,22 +733,26 @@ namespace FoodDeliveryApp.Data.Migrations
                     b.HasOne("FoodDeliveryApp.Data.Entities.Address", "Address")
                         .WithMany("Invoices")
                         .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FoodDeliveryApp.Data.Entities.Customer", "Customer")
                         .WithMany("Invoices")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FoodDeliveryApp.Data.Entities.Order", null)
+                    b.HasOne("FoodDeliveryApp.Data.Entities.Order", "Orders")
                         .WithMany("Invoices")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Address");
 
                     b.Navigation("Customer");
+
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("FoodDeliveryApp.Data.Entities.Menu", b =>

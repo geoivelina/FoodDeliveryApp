@@ -1,6 +1,7 @@
 ﻿using FoodDeliveryApp.Data;
 using FoodDeliveryApp.Models;
 using FoodDeliveryApp.Models.Home;
+using FoodDeliveryApp.Services.Statistics;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -9,16 +10,19 @@ namespace FoodDeliveryApp.Controllers
     public class HomeController : Controller
     {
         private readonly FoodDeliveryAppDbContext data;
-
-        public HomeController(FoodDeliveryAppDbContext data)
+        private readonly IStatisticsService statistics;
+        public HomeController(
+          IStatisticsService statistics,
+            FoodDeliveryAppDbContext data)
         {
             this.data = data;
+            this.statistics = statistics;
         }
 
 
         public IActionResult Index()
         {
-            var totalRestaurants = this.data.Restaurants.Count();
+
             var restaurants = this.data
                 .Restaurants
                 .OrderByDescending(r => r.Id)
@@ -31,12 +35,15 @@ namespace FoodDeliveryApp.Controllers
                 .Take(5)
                 .ToList();
 
+            var statistics = this.statistics.GetStatistics();
 
 
             return View(new IndexViewModel
             {
-                TotalRestaurants = totalRestaurants,
-                Restaurants = restaurants
+                TotalRestaurants = statistics.TotalRestaurants,
+                Restaurants = restaurants,
+                TotalUsers = statistics.TotalUsers,
+                TotalOrders = statistics.TotalOrders,
             });
         }
 
