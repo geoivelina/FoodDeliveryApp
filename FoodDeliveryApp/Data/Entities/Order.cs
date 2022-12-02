@@ -1,4 +1,5 @@
 ﻿using FoodDeliveryApp.Data.Entities.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace FoodDeliveryApp.Data.Entities
 {
@@ -12,6 +13,8 @@ namespace FoodDeliveryApp.Data.Entities
         public Dish Dish { get; set; }
         public int AddressId { get; set; }
         public Address Address { get; set; }
+        
+        [Precision(18,2)]
         public decimal TotalAmount { get; set; }
 
     }

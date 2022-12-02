@@ -82,6 +82,15 @@
 
         }
 
+        public class User
+        {
+            public const int FullNameMinLength = 6;
+            public const int FullNameMaxLength = 30;
+
+            public const int PasswordMinLength = 6;
+            public const int PasswordMaxLength = 100;
+        }
+
       
             
     }

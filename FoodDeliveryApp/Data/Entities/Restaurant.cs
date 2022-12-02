@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using static FoodDeliveryApp.Data.DataConstants.Restaurant;
 
 namespace FoodDeliveryApp.Data.Entities
@@ -36,6 +37,7 @@ namespace FoodDeliveryApp.Data.Entities
 
         [Required]
         [Range(0.00, 10.00)]
+        [Precision(4,2)]
         public decimal Rating { get; set; }
 
         public int CuisineTypeId { get; set; }

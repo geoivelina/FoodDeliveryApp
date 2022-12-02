@@ -18,7 +18,7 @@ namespace FoodDeliveryApp.Data.Entities
 
         [Required]
         [StringLength(PhoneNumberMaxLength)]
-        public string PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; } = null!;
 
         public string UserId { get; set; }
         public IEnumerable<Address> Addresses { get; set; } = new List<Address>();

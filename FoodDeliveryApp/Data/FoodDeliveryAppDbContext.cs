@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FoodDeliveryApp.Data
 {
-    public class FoodDeliveryAppDbContext : IdentityDbContext
+    public class FoodDeliveryAppDbContext : IdentityDbContext<User>
     {
         public FoodDeliveryAppDbContext(DbContextOptions<FoodDeliveryAppDbContext> options)
             : base(options)
