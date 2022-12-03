@@ -1,6 +1,8 @@
 using FoodDeliveryApp.Data;
 using FoodDeliveryApp.Data.Entities;
-using FoodDeliveryApp.Services.Restaurant;
+using FoodDeliveryApp.Services.Dishes;
+using FoodDeliveryApp.Services.Menus;
+using FoodDeliveryApp.Services.Restaurants;
 using FoodDeliveryApp.Services.Statistics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +27,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IStatisticsService, StatisticService>();
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
+builder.Services.AddScoped<IMenuService, MenuService>();
+builder.Services.AddScoped<IDishService, DishService>();
 
 var app = builder.Build();
 
@@ -47,16 +51,17 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
       name: "areas",
-      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-    );
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+    endpoints.MapControllerRoute(
+      name: "default",
+      pattern: "{controller=Home}/{action=Index}/{id?}");
+
     endpoints.MapRazorPages();
 });
 app.MapRazorPages();

@@ -2,7 +2,7 @@
 using FoodDeliveryApp.Models.Restaurant;
 using Microsoft.EntityFrameworkCore;
 
-namespace FoodDeliveryApp.Services.Restaurant
+namespace FoodDeliveryApp.Services.Restaurants
 {
     public class RestaurantService : IRestaurantService
     {
@@ -28,13 +28,13 @@ namespace FoodDeliveryApp.Services.Restaurant
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
                 searchTerm = $"%{searchTerm.ToLower()}%";
-                // this sorting does not work. Check why!!
+                //TODO this sorting does not work. Check why!!
 
                 //restaurantsQuery = restaurantsQuery.Where(r =>
                 //    r.Name.ToLower().Contains(searchTerm) ||
                 //    r.CuisineType.Name.ToLower().Contains(searchTerm));
 
-                //when performing search "a" and hit next-page-btn "a" becomes "%a%" check why!!!
+                //TODO when performing search "a" and hit next-page-btn "a" becomes "%a%" check why!!!
                 restaurantsQuery = restaurantsQuery
                    .Where(r => EF.Functions.Like(r.Name.ToLower(), searchTerm) ||
                    EF.Functions.Like(r.CuisineType.Name.ToLower(), searchTerm));

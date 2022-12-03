@@ -1,6 +1,6 @@
 ﻿using FoodDeliveryApp.Models.Restaurant;
 
-namespace FoodDeliveryApp.Services.Restaurant
+namespace FoodDeliveryApp.Services.Restaurants
 {
     public interface IRestaurantService
     {

@@ -11,6 +11,7 @@ namespace FoodDeliveryApp.Data.Entities
         public string Name { get; set; } = null!;
 
         [Required]
+        //TODO CHANGE THIS ONE TO FILE UPLOAD
         public string DishImage { get; set; } = null!;
 
         [Required]
@@ -22,5 +23,8 @@ namespace FoodDeliveryApp.Data.Entities
 
         public int MenuId { get; set; }
         public Menu Menu { get; set; }
+
+        public int RestaurantId { get; set; }
+        public Restaurant Restaurant { get; set; }
     }
 }

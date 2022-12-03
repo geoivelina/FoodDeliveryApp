@@ -19,7 +19,7 @@ namespace FoodDeliveryApp.Infrastructures
             {
                 Id = 1,
                 Name = "Salads",
-                RestaurantId = 1,
+                //RestaurantId = 1,
                 
             };
 
@@ -28,7 +28,7 @@ namespace FoodDeliveryApp.Infrastructures
             {
                 Id = 2,
                 Name = "Cold appetizers",
-                RestaurantId = 1,
+              //  RestaurantId = 1,
                 
             };
 
@@ -38,7 +38,7 @@ namespace FoodDeliveryApp.Infrastructures
             {
                 Id = 3,
                 Name = "Pizza",
-                RestaurantId = 1,
+               // RestaurantId = 1,
                 
             };
 
@@ -49,7 +49,7 @@ namespace FoodDeliveryApp.Infrastructures
             {
                 Id = 4,
                 Name = "Salads",
-                RestaurantId = 2,
+               // RestaurantId = 2,
                 
             };
 
@@ -58,7 +58,7 @@ namespace FoodDeliveryApp.Infrastructures
             {
                 Id = 5,
                 Name = "Starters",
-                RestaurantId = 2,
+              //  RestaurantId = 2,
                 
             };
 
@@ -68,7 +68,7 @@ namespace FoodDeliveryApp.Infrastructures
             {
                 Id = 6,
                 Name = "Tandoori",
-                RestaurantId = 2,
+               // RestaurantId = 2,
                 
             };
 
@@ -77,7 +77,7 @@ namespace FoodDeliveryApp.Infrastructures
             {
                 Id = 7,
                 Name = "The boxes",
-                RestaurantId = 3,
+              //  RestaurantId = 3,
                 
             };
 
@@ -86,7 +86,7 @@ namespace FoodDeliveryApp.Infrastructures
             {
                 Id = 8,
                 Name = "Burgers",
-                RestaurantId = 3,
+               // RestaurantId = 3,
                
             };
 
@@ -97,7 +97,7 @@ namespace FoodDeliveryApp.Infrastructures
             {
                 Id = 9,
                 Name = "Nigiri",
-                RestaurantId = 5,
+               // RestaurantId = 5,
                 
             };
 
@@ -106,7 +106,7 @@ namespace FoodDeliveryApp.Infrastructures
             {
                 Id = 10,
                 Name = "Hosomaki",
-                RestaurantId = 5,
+               // RestaurantId = 5,
              
             };
 
@@ -116,7 +116,7 @@ namespace FoodDeliveryApp.Infrastructures
             {
                 Id = 11,
                 Name = "Uramaki",
-                RestaurantId = 5,
+               // RestaurantId = 5,
                 
             };
 

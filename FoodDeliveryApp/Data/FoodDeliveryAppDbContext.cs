@@ -10,6 +10,7 @@ namespace FoodDeliveryApp.Data
         public FoodDeliveryAppDbContext(DbContextOptions<FoodDeliveryAppDbContext> options)
             : base(options)
         {
+            this.Database.Migrate();
         }
 
         public DbSet<Address> Addresses { get; set; }
@@ -30,12 +31,12 @@ namespace FoodDeliveryApp.Data
                 .HasForeignKey(r => r.CuisineTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder
-                .Entity<Dish>()
-                .HasOne(d => d.Menu)
-                .WithMany(d => d.Dishes)
-                .HasForeignKey(d => d.MenuId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //builder
+            //    .Entity<Dish>()
+            //    .HasOne(d => d.Menu)
+            //    .WithMany(d => d.Dishes)
+            //    .HasForeignKey(d => d.MenuId)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
 
             

@@ -1,0 +1,62 @@
+﻿@model DishFormModel
+@{
+    ViewData["Title"] = "Add Dish";
+}
+
+<div class="row">
+    <div class="offset-md-3 col-md-6 col-sm-12 ">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="mb-3 text-center">Add Dish</h2>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3 form-group">
+                        <label asp-for="Name"></label>
+                        <input asp-for="Name" class="form-control" placeholder="Dish Name">
+                        <span asp-validation-for="Name" class="small text-danger"></span>
+                    </div>
+                    <div class="mb-3 form-group">
+                        <label asp-for="DishImage"></label>
+                        <input asp-for="DishImage" class="form-control" placeholder="Image">
+                    </div>
+                    <div class="mb-3 form-group">
+                        <label asp-for="Descriprion"></label>
+                        <textarea asp-for="Descriprion" rows="3" class="form-control" placeholder="Short description of the dish"></textarea>
+                        <span asp-validation-for="Descriprion" class="small text-danger"></span>
+                    </div>
+                    <div class="mb-3 form-group">
+                        <label asp-for="Price"></label>
+                        <input asp-for="Price" rows="3" class="form-control" placeholder="Price">
+                        <span asp-validation-for="Price" class="small text-danger"></span>
+                    </div>
+                    <div class="mb-3 form-group">
+                        <label asp-for="RestaurantId"></label>
+                        <select asp-for="RestaurantId" class="form-control">
+                            @foreach (var restaurant in Model.Restaurants)
+                            {
+                                <option value="@restaurant.Id">@restaurant.Name</option>
+
+                            }
+                        </select>
+                    </div>
+                    <div class="mb-3 form-group">
+                        <label asp-for="MenuId"></label>
+                        <select asp-for="MenuId" class="form-control">
+                            @foreach (var menu in Model.Menus)
+                            {
+                                //TODO FIND A WAY TO RENDER THE MENUS ONLY FOR THE SELECTED RESTAURANT
+                                <option value="@menu.Id">@menu.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <input class="btn btn-dark" type="submit" value="Save" />
+                </form>
+            </div>
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div>
+</div>
+

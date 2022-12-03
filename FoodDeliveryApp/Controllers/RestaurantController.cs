@@ -1,12 +1,14 @@
 ﻿using FoodDeliveryApp.Data;
 using FoodDeliveryApp.Data.Entities;
 using FoodDeliveryApp.Models.Restaurant;
-using FoodDeliveryApp.Services.Restaurant;
+using FoodDeliveryApp.Services.Restaurants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodDeliveryApp.Controllers
 {
+    [Authorize]
     public class RestaurantController : Controller
     {
         private readonly IRestaurantService restaurants;
@@ -20,22 +22,20 @@ namespace FoodDeliveryApp.Controllers
             this.restaurants = restaurants;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
 
         [HttpGet]
+
         public IActionResult Add()
         {
-            return View(new AddRestaurantFormModel
+            return View(new RestaurantFormModel
             {
+                
                 CuisineTypes = this.GetRestaurantCuisineTypeModels()
             });
         }
 
         [HttpPost]
-        public IActionResult Add(AddRestaurantFormModel restaurant)
+        public IActionResult Add(RestaurantFormModel restaurant)
         {
             if (!this.data.CuisineTypes.Any(c => c.Id == restaurant.CuisineTypeId))
             {
@@ -85,6 +85,40 @@ namespace FoodDeliveryApp.Controllers
             query.Restaurants = queryResult.Restaurants;
 
             return View(query);
+        }
+        public IActionResult Details( int id)
+        {
+            return View(new RestaurantDetailsViewModel());
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult Edit(int id)
+        {
+            return View(new RestaurantFormModel());
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Edit(int id, RestaurantDetailsViewModel restaurant)
+        {
+            return RedirectToAction(nameof(All));
+        }
+
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            return View(new RestaurantDetailsViewModel());
+        }
+
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Delete(int id, RestaurantDetailsViewModel restaurant)
+        {
+            return RedirectToAction(nameof(All));
         }
 
         private IEnumerable<RestaurantCuisineTypeModel> GetRestaurantCuisineTypeModels()

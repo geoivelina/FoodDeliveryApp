@@ -3,7 +3,7 @@ using static FoodDeliveryApp.Data.DataConstants.Restaurant;
 
 namespace FoodDeliveryApp.Models.Restaurant
 {
-    public class AddRestaurantFormModel 
+    public class RestaurantFormModel 
     {
         [Required]
         [StringLength(NameMaxLength, MinimumLength = NameMinLength)]

@@ -1,4 +1,4 @@
-﻿@model AddRestaurantFormModel
+﻿@model RestaurantFormModel
 @{
     ViewData["Title"] = "Add Restaurant";
 }
@@ -46,7 +46,7 @@
                     </div>
                         <div class="mb-3 form-group">
                         <label asp-for="Rating"></label>
-                        <input asp-for="Rating" class="form-control" placeholder="20 - 45 min.">
+                        <input asp-for="Rating" class="form-control" placeholder="9.5">
                         <span asp-validation-for="Rating" class="small text-danger"></span>
                     </div>
                     <div class="mb-3 form-group">

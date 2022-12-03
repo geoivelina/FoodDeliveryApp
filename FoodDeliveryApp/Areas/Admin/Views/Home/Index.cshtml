@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="mt-4 p-5 bg-light text-center">
+    <h2 class="display-4">Hello, Admin!</h2>
+    <p class="lead mb-1 mt-3">
+        This is your administrator area - you can <b>read</b>, <b>create</b>,
+        <b>delete</b> and <b>edit</b> restaurants and deir menus.
+    </p>
+    <hr class="my-4">
+    <a asp-area="" asp-controller="Restaurant" asp-action="All"
+       class="btn btn-dark btn-lg">All Restaurants</a>
+    <a asp-area="" asp-controller="Restaurant" asp-action="Add"
+       class="btn btn-dark btn-lg">Add Restaurant</a>
+    <span>  |   </span>
+   @* <a asp-area="Admin" asp-controller="Houses" asp-action="Mine"
+       class="btn btn-primary btn-lg">My Houses</a>
+    <span>  |   </span>
+    <a asp-area="Admin" asp-controller="Rents" asp-action="All"
+       class="btn btn-primary btn-lg">All Rents</a>*@
+    <a asp-area="Admin" asp-controller="Users" asp-action="All"
+       class="btn btn-dark btn-lg">All Users</a>
+</div>

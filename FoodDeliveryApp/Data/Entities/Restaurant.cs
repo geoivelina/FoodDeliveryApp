@@ -13,6 +13,7 @@ namespace FoodDeliveryApp.Data.Entities
         public string Name { get; set; } = null!;
 
         [Required]
+        //TODO CHANGE THIS ONE TO FILE UPLOAD
         public string RestaurantImage { get; set; } = null!;
 
         [Required]

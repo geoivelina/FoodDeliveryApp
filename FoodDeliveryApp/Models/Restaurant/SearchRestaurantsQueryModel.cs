@@ -1,4 +1,4 @@
-﻿using FoodDeliveryApp.Services.Restaurant;
+﻿using FoodDeliveryApp.Services.Restaurants;
 using System.ComponentModel.DataAnnotations;
 
 namespace FoodDeliveryApp.Models.Restaurant
