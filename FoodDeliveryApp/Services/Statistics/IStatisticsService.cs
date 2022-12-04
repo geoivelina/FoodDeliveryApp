@@ -1,6 +1,4 @@
-﻿using FoodDeliveryApp.Services.Models;
-
-namespace FoodDeliveryApp.Services.Statistics
+﻿namespace FoodDeliveryApp.Services.Statistics
 {
     public interface IStatisticsService
     {

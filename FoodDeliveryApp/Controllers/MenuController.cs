@@ -33,7 +33,8 @@ namespace FoodDeliveryApp.Controllers
 
             var menuData = new Menu
             {
-                Name = menu.Name
+                Name = menu.Name,
+                RestaurantId = menu.RestaurantId
             };
 
             this.menus.Create(menu.Name);

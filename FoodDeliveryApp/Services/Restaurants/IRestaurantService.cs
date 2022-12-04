@@ -1,4 +1,4 @@
-﻿using FoodDeliveryApp.Models.Restaurant;
+﻿using FoodDeliveryApp.Services.Restaurants.Models;
 
 namespace FoodDeliveryApp.Services.Restaurants
 {
@@ -11,5 +11,8 @@ namespace FoodDeliveryApp.Services.Restaurants
             int restaurantsPerPage);
 
         IEnumerable<string> AllCuisineTypes();
+
+      
+
     }
 }

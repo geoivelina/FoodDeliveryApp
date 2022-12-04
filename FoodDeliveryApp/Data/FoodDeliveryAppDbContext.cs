@@ -10,7 +10,7 @@ namespace FoodDeliveryApp.Data
         public FoodDeliveryAppDbContext(DbContextOptions<FoodDeliveryAppDbContext> options)
             : base(options)
         {
-            this.Database.Migrate();
+            //this.Database.Migrate();
         }
 
         public DbSet<Address> Addresses { get; set; }

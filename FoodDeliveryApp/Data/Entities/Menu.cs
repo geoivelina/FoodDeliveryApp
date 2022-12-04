@@ -10,6 +10,9 @@ namespace FoodDeliveryApp.Data.Entities
         [Required]
         [StringLength(NameMaxLength)]
         public string Name { get; set; } = null!;
+        public int? RestaurantId { get; set; }
+        public Restaurant Restaurant { get; set; }
+        public IEnumerable<Dish> Dishes { get; set; } = new List<Dish>();
 
     }
 }

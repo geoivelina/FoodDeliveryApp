@@ -1,6 +1,6 @@
-﻿namespace FoodDeliveryApp.Models.Dish
+﻿namespace FoodDeliveryApp.Models.CuisineType
 {
-    public class RestaurantMenuModel
+    public class CuisineTypeFormModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

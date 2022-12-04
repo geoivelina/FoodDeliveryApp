@@ -21,7 +21,7 @@ namespace FoodDeliveryApp.Controllers
         {
             return View(new DishFormModel()
             {
-                Menus = this.dishes.GetAllMenues(),
+                //Menus = this.dishes.,
                 Restaurants = this.dishes.GetAllRestaurants()
                 
             });
@@ -42,7 +42,7 @@ namespace FoodDeliveryApp.Controllers
 
             if (!ModelState.IsValid)
             {
-                dish.Menus = this.dishes.GetAllMenues();
+               // dish.Menus = this.dishes.GetAllMenues();
                 dish.Restaurants = this.dishes.GetAllRestaurants();
                 return View(dish);
             }

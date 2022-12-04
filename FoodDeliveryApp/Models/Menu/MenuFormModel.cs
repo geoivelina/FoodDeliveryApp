@@ -1,4 +1,4 @@
-﻿using FoodDeliveryApp.Models.Dish;
+﻿using FoodDeliveryApp.Services.Restaurants.Models;
 using System.ComponentModel.DataAnnotations;
 using static FoodDeliveryApp.Data.DataConstants.Menu;
 

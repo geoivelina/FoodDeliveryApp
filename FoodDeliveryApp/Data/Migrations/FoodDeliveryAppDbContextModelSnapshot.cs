@@ -17,7 +17,7 @@ namespace FoodDeliveryApp.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.10")
+                .HasAnnotation("ProductVersion", "6.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -228,7 +228,7 @@ namespace FoodDeliveryApp.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("RestaurantId")
+                    b.Property<int?>("RestaurantId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -685,16 +685,14 @@ namespace FoodDeliveryApp.Migrations
             modelBuilder.Entity("FoodDeliveryApp.Data.Entities.Dish", b =>
                 {
                     b.HasOne("FoodDeliveryApp.Data.Entities.Menu", "Menu")
-                        .WithMany()
+                        .WithMany("Dishes")
                         .HasForeignKey("MenuId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FoodDeliveryApp.Data.Entities.Restaurant", "Restaurant")
-                        .WithMany()
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Dishes")
+                        .HasForeignKey("RestaurantId");
 
                     b.Navigation("Menu");
 
@@ -703,9 +701,11 @@ namespace FoodDeliveryApp.Migrations
 
             modelBuilder.Entity("FoodDeliveryApp.Data.Entities.Menu", b =>
                 {
-                    b.HasOne("FoodDeliveryApp.Data.Entities.Restaurant", null)
+                    b.HasOne("FoodDeliveryApp.Data.Entities.Restaurant", "Restaurant")
                         .WithMany("Menus")
                         .HasForeignKey("RestaurantId");
+
+                    b.Navigation("Restaurant");
                 });
 
             modelBuilder.Entity("FoodDeliveryApp.Data.Entities.Order", b =>
@@ -819,8 +819,15 @@ namespace FoodDeliveryApp.Migrations
                     b.Navigation("Orders");
                 });
 
+            modelBuilder.Entity("FoodDeliveryApp.Data.Entities.Menu", b =>
+                {
+                    b.Navigation("Dishes");
+                });
+
             modelBuilder.Entity("FoodDeliveryApp.Data.Entities.Restaurant", b =>
                 {
+                    b.Navigation("Dishes");
+
                     b.Navigation("Menus");
                 });
 #pragma warning restore 612, 618

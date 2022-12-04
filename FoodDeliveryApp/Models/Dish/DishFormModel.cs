@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FoodDeliveryApp.Services.Restaurants.Models;
+using System.ComponentModel.DataAnnotations;
 using static FoodDeliveryApp.Data.DataConstants.Dish;
 
 namespace FoodDeliveryApp.Models.Dish

@@ -1,5 +1,4 @@
 ﻿using FoodDeliveryApp.Data;
-using FoodDeliveryApp.Services.Models;
 
 namespace FoodDeliveryApp.Services.Statistics
 {

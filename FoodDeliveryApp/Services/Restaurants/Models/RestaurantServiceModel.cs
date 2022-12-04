@@ -1,4 +1,4 @@
-﻿namespace FoodDeliveryApp.Services.Restaurants
+﻿namespace FoodDeliveryApp.Services.Restaurants.Models
 {
     public class RestaurantServiceModel
     {

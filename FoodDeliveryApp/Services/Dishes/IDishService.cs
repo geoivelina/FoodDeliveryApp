@@ -1,4 +1,6 @@
-﻿using FoodDeliveryApp.Models.Dish;
+﻿using FoodDeliveryApp.Models.Restaurant;
+using FoodDeliveryApp.Services.Menus;
+using FoodDeliveryApp.Services.Restaurants.Models;
 
 namespace FoodDeliveryApp.Services.Dishes
 {
@@ -12,10 +14,11 @@ namespace FoodDeliveryApp.Services.Dishes
                 int restaurantId);
         bool MenuExist(int menuId);
 
-        IEnumerable<RestaurantMenuModel> GetAllMenues();
+       // IEnumerable<DishesServiceModel> GetAllDishes(int menuId, int restaurantId);
 
         bool RestaurantExist(int restaurantId);
         IEnumerable<RestaurantServiceModel> GetAllRestaurants();
+        IEnumerable<MenusServiceModels> AllMenus(int restaurantId);
     }
 
 }

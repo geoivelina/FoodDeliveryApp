@@ -1,7 +1,9 @@
 ﻿
 using FoodDeliveryApp.Data;
 using FoodDeliveryApp.Data.Entities;
-using FoodDeliveryApp.Models.Dish;
+using FoodDeliveryApp.Models.Restaurant;
+using FoodDeliveryApp.Services.Menus;
+using FoodDeliveryApp.Services.Restaurants.Models;
 
 namespace FoodDeliveryApp.Services.Dishes
 {
@@ -37,16 +39,7 @@ namespace FoodDeliveryApp.Services.Dishes
             return this.data.Menus.Any(m => m.Id == menuId);
         }
 
-        public IEnumerable<RestaurantMenuModel> GetAllMenues()
-        {
-            return this.data
-                .Menus
-                .Select(m => new RestaurantMenuModel()
-                {
-                    Id = m.Id,
-                    Name = m.Name
-                });
-        }
+      
 
         public IEnumerable<RestaurantServiceModel> GetAllRestaurants()
         {
@@ -63,5 +56,32 @@ namespace FoodDeliveryApp.Services.Dishes
         {
             return this.data.Restaurants.Any(r => r.Id == restaurantId);
         }
+        public IEnumerable<MenusServiceModels> AllMenus(int restaurantId)
+        {
+            return this.data
+                .Menus
+                .Where(m => m.RestaurantId == restaurantId)
+                .Select(m => new MenusServiceModels
+                {
+                    Id = m.Id,
+                    Name = m.Name
+                })
+            .ToList();
+        }
+
+        //public IEnumerable<DishesServiceModel> GetAllDishes(int menuId, int restaurantId)
+        //{
+        //    return this.data
+        //        .Dishes
+        //        .Where(d => d.MenuId == menuId && d.RestaurantId == restaurantId)
+        //        .Select(d => new DishesServiceModel
+        //        {
+        //            Name = d.Name,
+        //            Descriprion = d.Descriprion,
+        //            DishImage  = d.DishImage,
+        //            Price = d.Price
+        //        })
+        //        .ToList();
+        //}
     }
 }

@@ -1,5 +1,6 @@
 using FoodDeliveryApp.Data;
 using FoodDeliveryApp.Data.Entities;
+using FoodDeliveryApp.Services.CuisineTypes;
 using FoodDeliveryApp.Services.Dishes;
 using FoodDeliveryApp.Services.Menus;
 using FoodDeliveryApp.Services.Restaurants;
@@ -25,10 +26,11 @@ builder.Services.AddDefaultIdentity<User>(options =>
     .AddEntityFrameworkStores<FoodDeliveryAppDbContext>();
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IStatisticsService, StatisticService>();
-builder.Services.AddScoped<IRestaurantService, RestaurantService>();
-builder.Services.AddScoped<IMenuService, MenuService>();
+builder.Services.AddScoped<ICuisineTypeService, CuisineTypeService>();
 builder.Services.AddScoped<IDishService, DishService>();
+builder.Services.AddScoped<IMenuService, MenuService>();
+builder.Services.AddScoped<IRestaurantService, RestaurantService>();
+builder.Services.AddScoped<IStatisticsService, StatisticService>();
 
 var app = builder.Build();
 

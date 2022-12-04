@@ -1,4 +1,4 @@
-﻿namespace FoodDeliveryApp.Models.Restaurant
+﻿namespace FoodDeliveryApp.Services.Restaurants.Models
 {
     public enum RestaurantSorting
     {

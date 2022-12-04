@@ -1,5 +1,5 @@
 ﻿using FoodDeliveryApp.Data;
-using FoodDeliveryApp.Models.Restaurant;
+using FoodDeliveryApp.Services.Restaurants.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodDeliveryApp.Services.Restaurants
@@ -90,6 +90,8 @@ namespace FoodDeliveryApp.Services.Restaurants
                    .OrderBy(ct => ct)
                    .ToList();
         }
+
+       
 
     }
 }

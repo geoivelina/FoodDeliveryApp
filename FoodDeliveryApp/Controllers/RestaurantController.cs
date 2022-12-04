@@ -2,6 +2,7 @@
 using FoodDeliveryApp.Data.Entities;
 using FoodDeliveryApp.Models.Restaurant;
 using FoodDeliveryApp.Services.Restaurants;
+using FoodDeliveryApp.Services.Restaurants.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -29,8 +30,7 @@ namespace FoodDeliveryApp.Controllers
         {
             return View(new RestaurantFormModel
             {
-                
-                CuisineTypes = this.GetRestaurantCuisineTypeModels()
+             CuisineTypes = this.GetRestaurantCuisineTypeModels()
             });
         }
 
@@ -58,8 +58,6 @@ namespace FoodDeliveryApp.Controllers
                 RestaurantImage = restaurant.RestaurantImage,
                 WorkingHours = restaurant.WorkingHours,
                 Rating = restaurant.Rating,
-
-
             };
 
             this.data.Restaurants.Add(restaurantData);
@@ -88,7 +86,7 @@ namespace FoodDeliveryApp.Controllers
         }
         public IActionResult Details( int id)
         {
-            return View(new RestaurantDetailsViewModel());
+            return View(new RestaurantDetailsModel());
         }
 
         [HttpGet]
@@ -100,7 +98,7 @@ namespace FoodDeliveryApp.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Edit(int id, RestaurantDetailsViewModel restaurant)
+        public IActionResult Edit(int id, RestaurantDetailsModel restaurant)
         {
             return RedirectToAction(nameof(All));
         }
@@ -110,13 +108,13 @@ namespace FoodDeliveryApp.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            return View(new RestaurantDetailsViewModel());
+            return View(new RestaurantDetailsModel());
         }
 
 
         [Authorize]
         [HttpPost]
-        public IActionResult Delete(int id, RestaurantDetailsViewModel restaurant)
+        public IActionResult Delete(int id, RestaurantDetailsModel restaurant)
         {
             return RedirectToAction(nameof(All));
         }

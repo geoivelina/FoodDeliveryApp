@@ -1,4 +1,4 @@
-﻿namespace FoodDeliveryApp.Services.Models
+﻿namespace FoodDeliveryApp.Services.Statistics
 {
     public class StatisticsServiceModel
     {
