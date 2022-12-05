@@ -84,9 +84,17 @@ namespace FoodDeliveryApp.Controllers
 
             return View(query);
         }
-        public IActionResult Details( int id)
+      
+        public IActionResult Details(int id)
         {
-            return View(new RestaurantDetailsModel());
+            if (!this.restaurants.RestaurantExist(id))
+            {
+                return BadRequest();
+            }
+
+            var restaurantMOdel = this.restaurants.RestaurantDetailsById(id);
+
+            return View(restaurantMOdel);
         }
 
         [HttpGet]

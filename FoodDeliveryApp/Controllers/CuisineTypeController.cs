@@ -1,9 +1,11 @@
 ﻿using FoodDeliveryApp.Models.CuisineType;
 using FoodDeliveryApp.Services.CuisineTypes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodDeliveryApp.Controllers
 {
+    [Authorize]
     public class CuisineTypeController : Controller
     {
         private readonly ICuisineTypeService cuisineTypes;
@@ -22,9 +24,9 @@ namespace FoodDeliveryApp.Controllers
         [HttpPost]
         public IActionResult Add(CuisineTypeFormModel cuisine)
         {
-            if (this.cuisineTypes.CuisineTypeExist(cuisine.Id))
+            if (this.cuisineTypes.CuisineTypeExist(cuisine.Name)== true)
             {
-                this.ModelState.AddModelError(nameof(cuisine.Id), "This cuisine type already exist");
+                this.ModelState.AddModelError(nameof(cuisine.Name), "This cuisine type already exist");
             }
 
             if (!ModelState.IsValid)

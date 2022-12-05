@@ -1,4 +1,5 @@
-﻿using FoodDeliveryApp.Services.Restaurants.Models;
+﻿using FoodDeliveryApp.Services.Dishes;
+using FoodDeliveryApp.Services.Restaurants.Models;
 using System.ComponentModel.DataAnnotations;
 using static FoodDeliveryApp.Data.DataConstants.Dish;
 
@@ -24,13 +25,13 @@ namespace FoodDeliveryApp.Models.Dish
         public string Descriprion { get; set; } = null!;
 
         [Required]
-        [Display(Name = "Choose menu")]
+        [Display(Name = "Choose a menu")]
         public int MenuId { get; set; }
-        public IEnumerable<RestaurantMenuModel> Menus { get; set; } = new List<RestaurantMenuModel>();
+        public IEnumerable<DishMenusServiceModels> Menus { get; set; } = new List<DishMenusServiceModels>();
 
         [Required]
-        [Display(Name = "Choose restaurant")]
+        [Display(Name = "Choose a restaurant")]
         public int RestaurantId { get; set; }
-        public IEnumerable<RestaurantServiceModel> Restaurants { get; set; } = new List<RestaurantServiceModel>();
+        public IEnumerable<DishRestaurantServiceModel> Restaurants { get; set; } = new List<DishRestaurantServiceModel>();
     }
 }

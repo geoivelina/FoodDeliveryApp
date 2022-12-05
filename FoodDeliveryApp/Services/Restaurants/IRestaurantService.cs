@@ -12,7 +12,9 @@ namespace FoodDeliveryApp.Services.Restaurants
 
         IEnumerable<string> AllCuisineTypes();
 
-      
+        bool RestaurantExist(int id);
+
+        RestaurantDetailsModel RestaurantDetailsById(int id);
 
     }
 }

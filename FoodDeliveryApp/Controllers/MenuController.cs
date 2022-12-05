@@ -19,14 +19,23 @@ namespace FoodDeliveryApp.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            return View();
+            return View(new MenuFormModel
+            {
+                Restaurants = this.menus.GetAllRestaurants()
+            });
         }
 
         [HttpPost]
         public IActionResult Add(MenuFormModel menu)
         {
+            if (this.menus.RestaurantExist(menu.RestaurantId))
+            {
+                this.ModelState.AddModelError(nameof(menu.RestaurantId), "Restaurant does not exist");
+            }
+
             if (!ModelState.IsValid)
             {
+                menu.Restaurants = this.menus.GetAllRestaurants();
                 return View(menu);
             }
 
@@ -37,7 +46,7 @@ namespace FoodDeliveryApp.Controllers
                 RestaurantId = menu.RestaurantId
             };
 
-            this.menus.Create(menu.Name);
+            this.menus.Create(menu.Name, menu.RestaurantId);
             return RedirectToAction("Index", "Home");
         }
     }

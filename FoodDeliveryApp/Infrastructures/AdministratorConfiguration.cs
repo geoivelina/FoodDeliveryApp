@@ -8,18 +8,11 @@ namespace FoodDeliveryApp.Infrastructures
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasData(CreateCuiseneTypes());
+           
         }
 
 
-        private List<User> CreateCuiseneTypes()
-        {
-            var users = new List<User>()
-            {
-                
-            };
-            return users;
-        }
+        
     }
   
 }

@@ -4,11 +4,11 @@
     {
         public string Name { get; set; } = null!;
 
-       
         public string DishImage { get; set; } = null!;
-
         public decimal Price { get; set; }
 
         public string Descriprion { get; set; } = null!;
+        public int MenuId { get; set; }
+        public int? RestaurantId { get; set; }
     }
 }

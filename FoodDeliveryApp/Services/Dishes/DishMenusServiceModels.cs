@@ -1,6 +1,6 @@
-﻿namespace FoodDeliveryApp.Services.Menus
+﻿namespace FoodDeliveryApp.Services.Dishes
 {
-    public class MenusServiceModels
+    public class DishMenusServiceModels
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;

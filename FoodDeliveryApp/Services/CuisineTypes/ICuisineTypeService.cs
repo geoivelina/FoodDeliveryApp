@@ -3,6 +3,6 @@
     public interface ICuisineTypeService
     {
         int Create(int id, string Name);
-        bool CuisineTypeExist(int cuisineTypeId);
+        bool CuisineTypeExist(string cuisineTypeName);
     }
 }

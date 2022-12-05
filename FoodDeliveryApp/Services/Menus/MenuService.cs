@@ -1,6 +1,6 @@
 ﻿using FoodDeliveryApp.Data;
 using FoodDeliveryApp.Data.Entities;
-
+using FoodDeliveryApp.Services.Restaurants.Models;
 
 namespace FoodDeliveryApp.Services.Menus
 {
@@ -13,13 +13,12 @@ namespace FoodDeliveryApp.Services.Menus
             this.data = data;
         }
 
- 
-
-        public int Create(string name)
+        public int Create(string name, int restaurantId)
         {
             var menuModel = new Menu
             {
-                Name = name
+                Name = name,
+                RestaurantId = restaurantId
             };
 
             this.data.Menus.Add(menuModel);
@@ -28,6 +27,20 @@ namespace FoodDeliveryApp.Services.Menus
             return menuModel.Id;
         }
 
-       
+        public IEnumerable<MenuRestaurantServiceModel> GetAllRestaurants()
+        {
+            return this.data.Restaurants
+                    .Select(r => new MenuRestaurantServiceModel
+                    {
+                        Id = r.Id,
+                        Name = r.Name
+                    })
+                    .ToList();
+        }
+
+        public bool RestaurantExist(int restaurantId)
+        {
+            return this.data.Menus.Any(r => r.RestaurantId == restaurantId);
+        }
     }
 }

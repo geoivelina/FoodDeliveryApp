@@ -61,7 +61,7 @@ namespace FoodDeliveryApp.Services.Restaurants
                     Id = r.Id,
                     Name = r.Name,
                     RestaurantImage = r.RestaurantImage,
-                    Category = r.CuisineType.Name,
+                    CuisineType = r.CuisineType.Name,
                     DeliveryCost = r.DeliveryCost,
                     DeliveryTime = r.DeliveryTime,
                     MinOrderAmount = r.MinOrderAmount,
@@ -91,7 +91,35 @@ namespace FoodDeliveryApp.Services.Restaurants
                    .ToList();
         }
 
-       
+        public RestaurantDetailsModel RestaurantDetailsById(int id)
+        {
+            return this.data
+                .Restaurants
+                .Where(r => r.Id == id)
+                .Select(r => new RestaurantDetailsModel
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    RestaurantImage = r.RestaurantImage,
+                    DeliveryCost = r.DeliveryCost,
+                    DeliveryTime = r.DeliveryTime,
+                    MinOrderAmount = r.MinOrderAmount,
+                    WorkingHours = r.WorkingHours,
+                    Rating = r.Rating,
+                    CuisineType = r.CuisineType.Name,
+                    Menus = r.Menus.Select(m => new RestaurantMenuModel()
+                    {
+                        Id = m.Id,
+                        Name = m.Name
+                        
+                    }).ToList(),
+                })
+                .FirstOrDefault();
+        }
 
+        public bool RestaurantExist(int id)
+        {
+            return this.data.Restaurants.Any(r => r.Id == id);
+        }
     }
 }

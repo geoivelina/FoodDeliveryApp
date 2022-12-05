@@ -17,11 +17,13 @@
                 <label asp-for="Input.Email" class="form-label"></label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
+
             <div class="form-outline mb-2">
                 <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
                 <label asp-for="Input.Password" class="form-label"></label>
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
+
             <div class="row mb-2">
                 <div class="col d-flex justify-content-center">
 
@@ -39,6 +41,7 @@
                 </div>
             </div>
             <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-dark">Log in</button>
+
             <div class="text-center">
                 <p>
                     <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>

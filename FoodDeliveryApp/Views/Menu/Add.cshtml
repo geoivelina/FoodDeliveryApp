@@ -16,7 +16,15 @@
                         <input asp-for="Name" class="form-control" placeholder="Menu Name">
                         <span asp-validation-for="Name" class="small text-danger"></span>
                     </div>
-
+                     <div class="mb-3 form-group">
+                        <label asp-for="RestaurantId"></label>
+                        <select asp-for="RestaurantId" class="form-control">
+                            @foreach (var restaurant in Model.Restaurants)
+                            {
+                                <option value="@restaurant.Id">@restaurant.Name</option>
+                            }
+                        </select>
+                    </div>
                     <input class="btn btn-dark" type="submit" value="Save" />
                 </form>
             </div>

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using static FoodDeliveryApp.Data.DataConstants.Dish;
 namespace FoodDeliveryApp.Data.Entities
 {
@@ -15,6 +16,7 @@ namespace FoodDeliveryApp.Data.Entities
         public string DishImage { get; set; } = null!;
 
         [Required]
+        [Precision(18,2)]
         public decimal Price { get; set; }
 
         [Required]

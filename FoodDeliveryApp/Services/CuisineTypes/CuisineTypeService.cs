@@ -26,9 +26,9 @@ namespace FoodDeliveryApp.Services.CuisineTypes
             return cuisineType.Id;
         }
 
-        public bool CuisineTypeExist(int cuisineTypeId)
+        public bool CuisineTypeExist(string cuisineTypeName)
         {
-            return this.data.CuisineTypes.Any(ct=> ct.Id == cuisineTypeId);
+            return this.data.CuisineTypes.Any(ct=> ct.Name == cuisineTypeName);
         }
     }
 }

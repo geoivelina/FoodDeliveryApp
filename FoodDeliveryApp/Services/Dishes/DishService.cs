@@ -2,7 +2,6 @@
 using FoodDeliveryApp.Data;
 using FoodDeliveryApp.Data.Entities;
 using FoodDeliveryApp.Models.Restaurant;
-using FoodDeliveryApp.Services.Menus;
 using FoodDeliveryApp.Services.Restaurants.Models;
 
 namespace FoodDeliveryApp.Services.Dishes
@@ -39,12 +38,12 @@ namespace FoodDeliveryApp.Services.Dishes
             return this.data.Menus.Any(m => m.Id == menuId);
         }
 
-      
 
-        public IEnumerable<RestaurantServiceModel> GetAllRestaurants()
+
+        public IEnumerable<DishRestaurantServiceModel> GetAllRestaurants()
         {
             return this.data.Restaurants
-                 .Select(r => new RestaurantServiceModel
+                 .Select(r => new DishRestaurantServiceModel
                  {
                      Id = r.Id,
                      Name = r.Name,
@@ -56,20 +55,31 @@ namespace FoodDeliveryApp.Services.Dishes
         {
             return this.data.Restaurants.Any(r => r.Id == restaurantId);
         }
-        public IEnumerable<MenusServiceModels> AllMenus(int restaurantId)
+        public IEnumerable<DishMenusServiceModels> GetAllMenus()
         {
-            return this.data
-                .Menus
-                .Where(m => m.RestaurantId == restaurantId)
-                .Select(m => new MenusServiceModels
+            return this.data.Menus
+                .Select(m => new DishMenusServiceModels
                 {
                     Id = m.Id,
                     Name = m.Name
                 })
-            .ToList();
+                .Distinct()
+                .ToList();
         }
+        //public IEnumerable<DishMenusServiceModels> GetAllMenusByRestaurantId(int restaurantId)
+        //{
+        //    return this.data
+        //        .Menus
+        //        .Where(m => m.RestaurantId == restaurantId)
+        //        .Select(m => new DishMenusServiceModels
+        //        {
+        //            Id = m.Id,
+        //            Name = m.Name
+        //        })
+        //    .ToList();
+        //}
 
-        //public IEnumerable<DishesServiceModel> GetAllDishes(int menuId, int restaurantId)
+        //public IEnumerable<DishesServiceModel> GetAllDishesByMenuId(int menuId, int restaurantId)
         //{
         //    return this.data
         //        .Dishes
