@@ -1,4 +1,6 @@
-﻿using FoodDeliveryApp.Data;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using FoodDeliveryApp.Data;
 using FoodDeliveryApp.Models;
 using FoodDeliveryApp.Models.Home;
 using FoodDeliveryApp.Services.Statistics;
@@ -11,12 +13,15 @@ namespace FoodDeliveryApp.Controllers
     {
         private readonly FoodDeliveryAppDbContext data;
         private readonly IStatisticsService statistics;
+        private readonly IMapper mapper;
         public HomeController(
           IStatisticsService statistics,
-            FoodDeliveryAppDbContext data)
+            FoodDeliveryAppDbContext data,
+            IMapper mapper)
         {
             this.data = data;
             this.statistics = statistics;
+            this.mapper = mapper;
         }
 
 
@@ -25,13 +30,9 @@ namespace FoodDeliveryApp.Controllers
 
             var restaurants = this.data
                 .Restaurants
+                .Where(r => r.IsActive)
                 .OrderByDescending(r => r.Id)
-                .Select(r => new RestaurantIndexModel
-                {
-                    Id = r.Id,
-                    Name = r.Name,
-                    RestaurantImage = r.RestaurantImage
-                })
+                .ProjectTo<RestaurantIndexModel>(this.mapper.ConfigurationProvider)
                 .Take(5)
                 .ToList();
 
@@ -47,7 +48,7 @@ namespace FoodDeliveryApp.Controllers
             });
         }
 
-      
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

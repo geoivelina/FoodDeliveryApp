@@ -1,4 +1,5 @@
-﻿using FoodDeliveryApp.Data;
+﻿using AutoMapper;
+using FoodDeliveryApp.Data;
 using FoodDeliveryApp.Data.Entities;
 using FoodDeliveryApp.Models.Restaurant;
 using FoodDeliveryApp.Services.Restaurants;
@@ -14,13 +15,16 @@ namespace FoodDeliveryApp.Controllers
     {
         private readonly IRestaurantService restaurants;
         private readonly FoodDeliveryAppDbContext data;
+        private readonly IMapper mapper;
 
         public RestaurantController(
             IRestaurantService restaurants,
-            FoodDeliveryAppDbContext data)
+            FoodDeliveryAppDbContext data,
+            IMapper mapper)
         {
             this.data = data;
             this.restaurants = restaurants;
+            this.mapper = mapper;
         }
 
 
@@ -30,7 +34,7 @@ namespace FoodDeliveryApp.Controllers
         {
             return View(new RestaurantFormModel
             {
-             CuisineTypes = this.GetRestaurantCuisineTypeModels()
+                CuisineTypes = this.GetRestaurantCuisineTypeModels()
             });
         }
 
@@ -47,6 +51,7 @@ namespace FoodDeliveryApp.Controllers
                 restaurant.CuisineTypes = this.GetRestaurantCuisineTypeModels();
                 return View(restaurant);
             }
+
             var restaurantData = new Restaurant
             {
                 Name = restaurant.Name,
@@ -76,7 +81,7 @@ namespace FoodDeliveryApp.Controllers
                 query.CurrentPage,
                 SearchRestaurantsQueryModel.RestaurantsPerPage);
 
-            var cuisineTypes = this.restaurants.AllCuisineTypes();
+            var cuisineTypes = this.restaurants.GetAllCuisineTypes();
 
             query.TotalRestairants = queryResult.TotalRestaurants;
             query.CuisineTypes = cuisineTypes;
@@ -84,7 +89,7 @@ namespace FoodDeliveryApp.Controllers
 
             return View(query);
         }
-      
+
         public IActionResult Details(int id)
         {
             if (!this.restaurants.RestaurantExist(id))
@@ -92,7 +97,7 @@ namespace FoodDeliveryApp.Controllers
                 return BadRequest();
             }
 
-            var restaurantMOdel = this.restaurants.RestaurantDetailsById(id);
+            var restaurantMOdel = this.restaurants.Details(id);
 
             return View(restaurantMOdel);
         }
@@ -101,13 +106,48 @@ namespace FoodDeliveryApp.Controllers
         [Authorize]
         public IActionResult Edit(int id)
         {
-            return View(new RestaurantFormModel());
+            //TODO CHECK IF USER IS ADMIN
+
+            if (restaurants.RestaurantExist(id) == false)
+            {
+                return BadRequest();
+            }
+
+            var restaurantData = this.restaurants.Details(id);
+
+           
+            var restaurant = this.mapper.Map<RestaurantFormModel>(restaurantData);
+         
+
+            restaurant.CuisineTypes = this.restaurants.GetAllCuisineTypes();
+
+            return View(restaurant);
         }
 
         [HttpPost]
         [Authorize]
-        public IActionResult Edit(int id, RestaurantDetailsModel restaurant)
+        public IActionResult Edit(RestaurantFormModel restaurant)
         {
+            //TODO CHECK IF USER IS ADMIN
+            if (!this.restaurants.RestaurantExist(restaurant.Id))
+            {
+                return this.View();
+            }
+
+            if (!this.restaurants.CuisineTypeExist(restaurant.CuisineTypeId))
+            {
+                this.ModelState.AddModelError(nameof(restaurant.CuisineTypeId), "Cuisine Type does not exist");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                restaurant.CuisineTypes = this.restaurants.GetAllCuisineTypes();
+                return View(restaurant);
+            }
+
+           this.restaurants.Edit(restaurant.Id, restaurant) ;
+
+
             return RedirectToAction(nameof(All));
         }
 
@@ -116,14 +156,33 @@ namespace FoodDeliveryApp.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            return View(new RestaurantDetailsModel());
+            //TODO CHECK IF THE USER IS ADMIN
+            if (restaurants.RestaurantExist(id) == false)
+            {
+                return BadRequest();
+            }
+
+            var restaurantData = this.restaurants.Details(id);
+
+            var restaurant = this.mapper.Map<RestaurantDeleteViewMOdel>(restaurantData);
+
+            return View(restaurant);
+
         }
 
 
         [Authorize]
         [HttpPost]
-        public IActionResult Delete(int id, RestaurantDetailsModel restaurant)
+        public IActionResult Delete(int id, RestaurantDeleteViewMOdel restaurant)
         {
+            //TODO CHECK IF THE USER IS ADMIN
+            if (restaurants.RestaurantExist(id) == false)
+            {
+                return BadRequest();
+            }
+
+            restaurants.Delete(id);
+
             return RedirectToAction(nameof(All));
         }
 

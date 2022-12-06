@@ -1,9 +1,4 @@
-﻿@model RestaurantDeleteViewMOdel
-@{
-    ViewData["Title"] = "Delete Restaurant";
-}
-
-<h2 class="text-center">@ViewBag.Title</h2>
+﻿@model RestaurantFormModel
 
 <div class="row">
     <div class="offset-md-3 col-md-6 col-sm-12 ">
@@ -49,16 +44,22 @@
                         <input asp-for="Rating" class="form-control" placeholder="9.5">
                         <span asp-validation-for="Rating" class="small text-danger"></span>
                     </div>
-
-                    <input class="btn btn-dark" type="submit" value="Delete" />
+                    <div class="mb-3 form-group">
+                        <label asp-for="CuisineTypeId"></label>
+                        <select asp-for="CuisineTypeId" class="form-control">
+                            @foreach (var cuisine in Model.CuisineTypes)
+                            {
+                                <option value="@cuisine.Id">@cuisine.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <input class="btn btn-dark" type="submit" value="Save" />
                 </form>
             </div>
             <div class="card-footer">
             </div>
         </div>
+
+
     </div>
 </div>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}

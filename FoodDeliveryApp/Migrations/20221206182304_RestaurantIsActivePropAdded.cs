@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FoodDeliveryApp.Migrations
 {
-    public partial class SeedingData : Migration
+    public partial class RestaurantIsActivePropAdded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -211,6 +211,7 @@ namespace FoodDeliveryApp.Migrations
                     DeliveryTime = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     MinOrderAmount = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     Rating = table.Column<decimal>(type: "decimal(4,2)", precision: 4, scale: 2, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     CuisineTypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -358,13 +359,13 @@ namespace FoodDeliveryApp.Migrations
 
             migrationBuilder.InsertData(
                 table: "Restaurants",
-                columns: new[] { "Id", "CuisineTypeId", "DeliveryCost", "DeliveryTime", "Description", "MinOrderAmount", "Name", "Rating", "RestaurantImage", "WorkingHours" },
+                columns: new[] { "Id", "CuisineTypeId", "DeliveryCost", "DeliveryTime", "Description", "IsActive", "MinOrderAmount", "Name", "Rating", "RestaurantImage", "WorkingHours" },
                 values: new object[,]
                 {
-                    { 1, 8, "Free", "20 - 50 min.", "Authentic Italian pizza", "Min. 10.00 lv.", "Genaro`s pizza", 8.50m, "https://tse1.mm.bing.net/th?id=OIP.VIHoNlxPTkXfW2i6DgfIbwHaF7&pid=Api", "12:00 - 22:00" },
-                    { 2, 1, "Free from 30.00 lv.", "30 - 50 min.", "Authentic Indian pizza", "Min. 20.00 lv.", "Taj Mahal", 7.5m, "https://tse2.mm.bing.net/th?id=OIP.8gNduGMsG-TnwPqLDlRQVQHaE8&pid=Api", "11:00 - 23:00" },
-                    { 3, 2, "Free from 20.00 lv.", "20 - 50 min.", "Best American style burgers", "Min. 20.00 lv.", "Burgers & Fries", 9.8m, "https://tse1.mm.bing.net/th?id=OIP.W0r1nOj-EPrXoziOqjjFPAHaE8&pid=Api", "11:00 - 23:00" },
-                    { 5, 3, "2.99 lv.", "30 - 60 min.", "Authentic sushi prepared from our sushi master", "Min. 20.00 lv.", "Kioto sushi", 7.80m, "https://tse3.mm.bing.net/th?id=OIP.2oT2R6wz3DbEm0NIePcJzwHaE_&pid=Api", "11:00 - 24:00" }
+                    { 1, 8, "Free", "20 - 50 min.", "Authentic Italian pizza", true, "Min. 10.00 lv.", "Genaro`s pizza", 8.50m, "https://tse1.mm.bing.net/th?id=OIP.VIHoNlxPTkXfW2i6DgfIbwHaF7&pid=Api", "12:00 - 22:00" },
+                    { 2, 1, "Free from 30.00 lv.", "30 - 50 min.", "Authentic Indian pizza", true, "Min. 20.00 lv.", "Taj Mahal", 7.5m, "https://tse2.mm.bing.net/th?id=OIP.8gNduGMsG-TnwPqLDlRQVQHaE8&pid=Api", "11:00 - 23:00" },
+                    { 3, 2, "Free from 20.00 lv.", "20 - 50 min.", "Best American style burgers", true, "Min. 20.00 lv.", "Burgers & Fries", 9.8m, "https://tse1.mm.bing.net/th?id=OIP.W0r1nOj-EPrXoziOqjjFPAHaE8&pid=Api", "11:00 - 23:00" },
+                    { 5, 3, "2.99 lv.", "30 - 60 min.", "Authentic sushi prepared from our sushi master", true, "Min. 20.00 lv.", "Kioto sushi", 7.80m, "https://tse3.mm.bing.net/th?id=OIP.2oT2R6wz3DbEm0NIePcJzwHaE_&pid=Api", "11:00 - 24:00" }
                 });
 
             migrationBuilder.InsertData(

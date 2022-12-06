@@ -1,4 +1,5 @@
-﻿using FoodDeliveryApp.Services.Restaurants.Models;
+﻿using FoodDeliveryApp.Models.Restaurant;
+using FoodDeliveryApp.Services.Restaurants.Models;
 
 namespace FoodDeliveryApp.Services.Restaurants
 {
@@ -10,11 +11,14 @@ namespace FoodDeliveryApp.Services.Restaurants
             int currentPage,
             int restaurantsPerPage);
 
-        IEnumerable<string> AllCuisineTypes();
+        IEnumerable<RestaurantCuisineTypeModel> GetAllCuisineTypes();
 
-        bool RestaurantExist(int id);
+        int GetCuisineTypeId(int restaurantId);
+        bool RestaurantExist(int restaurantId);
+        bool CuisineTypeExist( int cuisineTypeId);
 
-        RestaurantDetailsModel RestaurantDetailsById(int id);
-
+        RestaurantDetailsModel Details(int id);
+        void Edit(int restaurantId, RestaurantFormModel restaurant);
+        void Delete(int restaurantId);
     }
 }

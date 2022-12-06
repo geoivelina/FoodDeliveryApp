@@ -16,7 +16,7 @@ namespace FoodDeliveryApp.Models.Restaurant
         public int CurrentPage { get; set; } = 1;
 
         public int TotalRestairants { get; set; }
-        public IEnumerable<string> CuisineTypes { get; set; } = new List<string>();
+        public IEnumerable<RestaurantCuisineTypeModel> CuisineTypes { get; set; } = new List<RestaurantCuisineTypeModel>();
         public IEnumerable<RestaurantServiceModel> Restaurants { get; set; } =new List<RestaurantServiceModel>();
     }
 }

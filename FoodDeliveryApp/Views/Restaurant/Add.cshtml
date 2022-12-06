@@ -2,69 +2,9 @@
 @{
     ViewData["Title"] = "Add Restaurant";
 }
-<div class="row">
-    <div class="offset-md-3 col-md-6 col-sm-12 ">
-        <div class="card">
-            <div class="card-header">
-                <h2 class="mb-3 text-center">Add Restaurant</h2>
-            </div>
-            <div class="card-body">
-                <form method="post">
-                    <div class="mb-3 form-group">
-                        <label asp-for="Name"></label>
-                        <input asp-for="Name" class="form-control" placeholder="Restaurant Name">
-                        <span asp-validation-for="Name" class="small text-danger"></span>
-                    </div>
-                    <div class="mb-3 form-group">
-                        <label asp-for="RestaurantImage"></label>
-                        <input asp-for="RestaurantImage" class="form-control" placeholder="Image">
-                    </div>
-                    <div class="mb-3 form-group">
-                        <label asp-for="Description"></label>
-                        <textarea asp-for="Description" rows="3" class="form-control" placeholder="Short description"></textarea>
-                        <span asp-validation-for="Description" class="small text-danger"></span>
-                    </div>
-                    <div class="mb-3 form-group">
-                        <label asp-for="WorkingHours"></label>
-                        <input asp-for="WorkingHours" class="form-control" placeholder="13:00 - 23:00">
-                        <span asp-validation-for="WorkingHours" class="small text-danger"></span>
-                    </div>
-                    <div class="mb-3 form-group">
-                        <label asp-for="DeliveryCost"></label>
-                        <input asp-for="DeliveryCost" class="form-control" placeholder="3.99 lv., Free or Free delivery from 50.00 lv.">
-                        <span asp-validation-for="DeliveryCost" class="small text-danger"></span>
-                    </div>
-                    <div class="mb-3 form-group">
-                        <label asp-for="MinOrderAmount"></label>
-                        <input asp-for="MinOrderAmount" class="form-control" placeholder="Min. 30.99 lv.">
-                        <span asp-validation-for="MinOrderAmount" class="small text-danger"></span>
-                    </div>
-                    <div class="mb-3 form-group">
-                        <label asp-for="DeliveryTime"></label>
-                        <input asp-for="DeliveryTime" class="form-control" placeholder="20 - 45 min.">
-                        <span asp-validation-for="DeliveryTime" class="small text-danger"></span>
-                    </div>
-                        <div class="mb-3 form-group">
-                        <label asp-for="Rating"></label>
-                        <input asp-for="Rating" class="form-control" placeholder="9.5">
-                        <span asp-validation-for="Rating" class="small text-danger"></span>
-                    </div>
-                    <div class="mb-3 form-group">
-                        <label asp-for="CuisineTypeId"></label>
-                        <select asp-for="CuisineTypeId" class="form-control">
-                            @foreach (var cuisine in Model.CuisineTypes)
-                            {
-                                <option value="@cuisine.Id">@cuisine.Name</option>
-                            }
-                        </select>
-                    </div>
-                    <input class="btn btn-dark" type="submit" value="Save" />
-                </form>
-            </div>
-            <div class="card-footer">
-            </div>
-        </div>
 
+<partial name="_RestaurantFormPartial" model="@Model"/>
 
-    </div>
-</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

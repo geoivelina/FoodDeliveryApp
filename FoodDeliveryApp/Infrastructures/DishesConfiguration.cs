@@ -15,7 +15,7 @@ namespace FoodDeliveryApp.Infrastructures
         {
             var dishes = new List<Dish>()
             {
-                //THERE IS PROBLEM WITH DISHES SEEDING. FIND WHATS GOING ON!
+                //TODO THERE IS PROBLEM WITH DISHES SEEDING. FIND WHATS GOING ON!
                 //new Dish()
                 //{
                 //    Id = 1,

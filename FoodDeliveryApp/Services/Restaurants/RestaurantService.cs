@@ -1,4 +1,7 @@
-﻿using FoodDeliveryApp.Data;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using FoodDeliveryApp.Data;
+using FoodDeliveryApp.Models.Restaurant;
 using FoodDeliveryApp.Services.Restaurants.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,10 +10,12 @@ namespace FoodDeliveryApp.Services.Restaurants
     public class RestaurantService : IRestaurantService
     {
         private readonly FoodDeliveryAppDbContext data;
+        private readonly IMapper mapper;
 
-        public RestaurantService(FoodDeliveryAppDbContext data)
+        public RestaurantService(FoodDeliveryAppDbContext data, IMapper mapper)
         {
             this.data = data;
+            this.mapper = mapper;
         }
         public RestaurantQueryServiceModel All(
                                     string cuisineType,
@@ -19,7 +24,7 @@ namespace FoodDeliveryApp.Services.Restaurants
                                     int currentPage,
                                     int restaurantsPerPage)
         {
-            var restaurantsQuery = this.data.Restaurants.AsQueryable();
+            var restaurantsQuery = this.data.Restaurants.AsQueryable().Where(r => r.IsActive);
             if (!string.IsNullOrWhiteSpace(cuisineType))
             {
                 restaurantsQuery = restaurantsQuery.Where(r => r.CuisineType.Name == cuisineType);
@@ -41,7 +46,7 @@ namespace FoodDeliveryApp.Services.Restaurants
             };
 
 
-            //TODO CHECK WHY ORDER BY RATINGG DOES NOT WORK!
+            //TODO CHECK WHY ORDER BY RATING DOES NOT WORK!
             restaurantsQuery = sorting switch
             {
                 RestaurantSorting.LastAdded => restaurantsQuery.OrderByDescending(r => r.Id),
@@ -80,46 +85,64 @@ namespace FoodDeliveryApp.Services.Restaurants
             };
         }
 
-        public IEnumerable<string> AllCuisineTypes()
+        public IEnumerable<RestaurantCuisineTypeModel> GetAllCuisineTypes()
         {
             return this.data
-                   .Restaurants
-                   .Select(r => r.CuisineType.Name)
-                   .OrderBy(r => r)
-                   .Distinct()
-                   .OrderBy(ct => ct)
+                   .CuisineTypes
+                   .Select(r => new RestaurantCuisineTypeModel()
+                   {
+                       Id = r.Id,
+                       Name = r.Name
+                   })
                    .ToList();
         }
-
-        public RestaurantDetailsModel RestaurantDetailsById(int id)
+        public int GetCuisineTypeId(int restaurantId)
+        {
+            return this.data.Restaurants.Where(r => r.Id == restaurantId).Select(r => r.CuisineTypeId).FirstOrDefault();
+        }
+        public RestaurantDetailsModel Details(int id)
         {
             return this.data
                 .Restaurants
+                .Where(r=>r.IsActive)
                 .Where(r => r.Id == id)
-                .Select(r => new RestaurantDetailsModel
-                {
-                    Id = r.Id,
-                    Name = r.Name,
-                    RestaurantImage = r.RestaurantImage,
-                    DeliveryCost = r.DeliveryCost,
-                    DeliveryTime = r.DeliveryTime,
-                    MinOrderAmount = r.MinOrderAmount,
-                    WorkingHours = r.WorkingHours,
-                    Rating = r.Rating,
-                    CuisineType = r.CuisineType.Name,
-                    Menus = r.Menus.Select(m => new RestaurantMenuModel()
-                    {
-                        Id = m.Id,
-                        Name = m.Name
-                        
-                    }).ToList(),
-                })
+                .ProjectTo<RestaurantDetailsModel>(this.mapper.ConfigurationProvider)
                 .FirstOrDefault();
         }
 
-        public bool RestaurantExist(int id)
+        public void Edit(int restaurantId, RestaurantFormModel restaurant)
         {
-            return this.data.Restaurants.Any(r => r.Id == id);
+            var restaurantData = this.data.Restaurants.Find(restaurantId);
+
+            restaurantData.Name = restaurant.Name;
+            restaurantData.RestaurantImage = restaurant.RestaurantImage;
+            restaurantData.Description = restaurant.Description;
+            restaurantData.Rating = restaurant.Rating;
+            restaurantData.WorkingHours = restaurant.WorkingHours;
+            restaurantData.DeliveryCost = restaurant.DeliveryCost;
+            restaurantData.MinOrderAmount = restaurant.MinOrderAmount;
+            restaurantData.DeliveryTime = restaurant.DeliveryTime;
+            restaurantData.CuisineTypeId = restaurant.CuisineTypeId;
+
+            this.data.SaveChanges();
+        }
+
+        public bool RestaurantExist(int restaurantId)
+        {
+            return this.data.Restaurants.Any(r => r.Id == restaurantId && r.IsActive);
+        }
+
+        public bool CuisineTypeExist(int cuisineTypeId)
+        {
+            return this.data.CuisineTypes.Any(c => c.Id == cuisineTypeId);
+        }
+
+        public void Delete(int restaurantId)
+        {
+            var restaurant = this.data.Restaurants.Find(restaurantId);
+            restaurant.IsActive = false;
+
+            this.data.SaveChanges();
         }
     }
 }

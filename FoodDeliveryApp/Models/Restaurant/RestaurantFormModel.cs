@@ -6,6 +6,8 @@ namespace FoodDeliveryApp.Models.Restaurant
 {
     public class RestaurantFormModel 
     {
+
+        public int Id { get; set; }
         [Required]
         [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
         public string Name { get; set; } = null!;

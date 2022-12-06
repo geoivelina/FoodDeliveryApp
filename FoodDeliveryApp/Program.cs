@@ -6,6 +6,7 @@ using FoodDeliveryApp.Services.Menus;
 using FoodDeliveryApp.Services.Restaurants;
 using FoodDeliveryApp.Services.Statistics;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +25,14 @@ builder.Services.AddDefaultIdentity<User>(options =>
 })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<FoodDeliveryAppDbContext>();
-builder.Services.AddControllersWithViews();
+
+
+builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+});
 
 builder.Services.AddScoped<ICuisineTypeService, CuisineTypeService>();
 builder.Services.AddScoped<IDishService, DishService>();

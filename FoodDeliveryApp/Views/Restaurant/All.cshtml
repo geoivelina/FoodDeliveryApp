@@ -37,9 +37,8 @@
     </div>
 </form>
 
-<div class="mb-5"></div>
 
-
+<partial name="_RestaurantPartial" model="@Model.Restaurants" />
 
 @{
     var previousPage = Model.CurrentPage - 1;
@@ -72,13 +71,12 @@
 
     </div>
 </div>
+
+<div class="mb-5"></div>
+
 @if (!Model.Restaurants.Any())
 {
     <h2 class="text-center">No Resrauransts Found By The Giver Criteria </h2>
 }
-<div class="row">
-    @foreach (var restaurant in Model.Restaurants)
-    {
-        <partial name="_RestaurantPartial" model="@restaurant" />
-    }
-</div>
+
+

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodDeliveryApp.Migrations
 {
     [DbContext(typeof(FoodDeliveryAppDbContext))]
-    [Migration("20221205083427_SeedingData")]
-    partial class SeedingData
+    [Migration("20221206182304_RestaurantIsActivePropAdded")]
+    partial class RestaurantIsActivePropAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -389,6 +389,9 @@ namespace FoodDeliveryApp.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("MinOrderAmount")
                         .IsRequired()
                         .HasMaxLength(15)
@@ -426,6 +429,7 @@ namespace FoodDeliveryApp.Migrations
                             DeliveryCost = "Free",
                             DeliveryTime = "20 - 50 min.",
                             Description = "Authentic Italian pizza",
+                            IsActive = true,
                             MinOrderAmount = "Min. 10.00 lv.",
                             Name = "Genaro`s pizza",
                             Rating = 8.50m,
@@ -439,6 +443,7 @@ namespace FoodDeliveryApp.Migrations
                             DeliveryCost = "Free from 30.00 lv.",
                             DeliveryTime = "30 - 50 min.",
                             Description = "Authentic Indian pizza",
+                            IsActive = true,
                             MinOrderAmount = "Min. 20.00 lv.",
                             Name = "Taj Mahal",
                             Rating = 7.5m,
@@ -452,6 +457,7 @@ namespace FoodDeliveryApp.Migrations
                             DeliveryCost = "Free from 20.00 lv.",
                             DeliveryTime = "20 - 50 min.",
                             Description = "Best American style burgers",
+                            IsActive = true,
                             MinOrderAmount = "Min. 20.00 lv.",
                             Name = "Burgers & Fries",
                             Rating = 9.8m,
@@ -465,6 +471,7 @@ namespace FoodDeliveryApp.Migrations
                             DeliveryCost = "2.99 lv.",
                             DeliveryTime = "30 - 60 min.",
                             Description = "Authentic sushi prepared from our sushi master",
+                            IsActive = true,
                             MinOrderAmount = "Min. 20.00 lv.",
                             Name = "Kioto sushi",
                             Rating = 7.80m,
